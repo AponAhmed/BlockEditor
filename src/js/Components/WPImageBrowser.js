@@ -1,15 +1,19 @@
 import Component from "../Component.js";
 
 export default class WPImageBrowser extends Component {
-    constructor(parentComponent) {
+    constructor(parentComponent = {}, props = {}) {
         super(parentComponent, 'Image');
+        this.props = { ...this.props, ...props };
         this.width = 200; // default width
         this.height = 150; // default height
-        this.dom = document.createElement('div');
         this.dom.classList.add('layout-image');
         this.img = document.createElement('img');
-
-        this.openMediaUploader();
+        if (!this.props.hasOwnProperty("src") || this.props.src == "") {
+            this.openMediaUploader();
+        } else {
+            this.handleImageSelection(this.props.src);
+        }
+      
         this.makeResizable();
     }
 

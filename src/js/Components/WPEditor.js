@@ -1,10 +1,12 @@
 import Component from "../Component.js";
 
 export default class WPEditor extends Component {
-    constructor(parentComponent = "") {
+    constructor(parentComponent = {}, props = {}) {
         super(parentComponent, 'Editor');
+        this.props = { ...this.props, ...props };
+
         this.name = this.generateUniqueId("editor");
-        this.html = "<p>Default Text</p>";
+        this.html = this.props.content || "<p>Default Text</p>";
         this.dom = document.createElement('div');
         this.dom.classList.add('editor');
         this.editorId = `${this.name}_editor`; // Unique ID for the editor
