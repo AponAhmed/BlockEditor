@@ -1,9 +1,9 @@
-// import './src/styles/area.css';
-// import './src/styles/context-menu.css';
-// import './src/styles/area-actionbar.css';
-// import "./src/styles/input-styles.css";
-// import "./src/styles/resize-pointer.css";
-// import "./src/styles/builder.css";
+import './src/styles/area.css';
+import './src/styles/context-menu.css';
+import './src/styles/area-actionbar.css';
+import "./src/styles/input-styles.css";
+import "./src/styles/resize-pointer.css";
+import "./src/styles/builder.css";
 
 import Area from './src/js/Area.js';
 import DOMBuilder from './src/js/DomBuilder.js';

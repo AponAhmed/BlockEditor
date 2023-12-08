@@ -1,3 +1,5 @@
+import Heading from "./Components/Heading.js";
+import Paragraph from "./Components/Paragraph.js";
 import ComponentLists from "./ComponentsRegistry.js";
 
 export default class Area {
@@ -147,10 +149,27 @@ export default class Area {
             props.childs.forEach(c => {
                 if (c.type == "Area") {
                     this.createNewArea(c);
-                } else if (c.type == "") {
+                } else if (c.type == "H") {
                     //For Other Components
+                    let comObj = new Heading(this, c);
+                    this.components.push(comObj);
+                    this.dom.appendChild(comObj.dom);
+                } else if (c.type == "P") {
+                    let comObj = new Paragraph(this, c);
+                    this.components.push(comObj);
+                    this.dom.appendChild(comObj.dom);
+                } else if (c.type == "Image") {
 
                 }
+
+                // let comObj = new componentClass(this);
+                // this.components.push(comObj);
+                // if (comObj.type == "Editor") {
+                //     this.dom.appendChild(comObj.dom);
+                //     comObj.initializeWPEditor();
+                // } else {
+                //     this.dom.appendChild(comObj.dom);
+                // }
             });
         }
     }
