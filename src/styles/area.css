@@ -1,0 +1,36 @@
+.layout-area {
+    border: 1px dotted #b7b7b7;
+    padding: 10px;
+    margin: 0px;
+    min-height: 60px;
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    flex: auto;
+}
+
+.layout-area:empty {
+    border: 1px solid #ccc;
+    background: #f00;
+}
+
+.layout-area.area-selected {
+    border-style: solid;
+    border-color: #ace4ff;
+}
+
+.layout-area:empty {
+    border: 1px solid #ccc;
+}
+
+.layout-area:hover {
+    border-color: #3f7155;
+}
+
+.layout-row {
+    flex-direction: row;
+}
+
+.layout-column {
+    flex-direction: column;
+}
