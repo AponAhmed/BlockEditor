@@ -17,11 +17,21 @@ class Component {
 
         this.actions = [];
         this.initDom();
-        this.actionDom = this.domBuilder.create('div').class("control-section").getElement();
+        this.actionDom = this.domBuilder.create('div')
+            .event('mouseover', () => {
+                if (!this.dom.classList.contains('component-highlight'))
+                    this.dom.classList.add('component-highlight');
+
+            }).event('mouseout', () => {
+                if (this.dom.classList.contains('component-highlight'))
+                    this.dom.classList.remove('component-highlight');
+
+            }).class("control-section").getElement();
+
         // Create a remove button as a common action
         this.addAction({
             label: '&times;',
-            handler: () => this.remove()
+            handler: () => this.remove(),
         });
         this.updateActions();
     }
