@@ -4,16 +4,17 @@
 }
 
 .component-wrapper .control-section {
-    position: absolute;
-    right: 0;
-    top: 0;
-    flex-direction: column;
-    background: rgba(227, 227, 227, 0.8);
-    display: none;
-    width: 25px;
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, .05);
-    z-index: 9;
+	position: absolute;
+	right: 0;
+	top: 50%;
+	flex-direction: column;
+	background: rgba(227, 227, 227, 0.8);
+	display: none;
+	width: 25px;
+	border-radius: 4px;
+	border: 1px solid rgba(0, 0, 0, .05);
+	z-index: 9;
+	transform: translate(0,-50%);
 }
 
 .component-wrapper:hover .control-section {
@@ -43,6 +44,20 @@
 
 .control-section .component-action-btn:last-child {
     border-bottom: 0;
+}
+
+/*Column*/
+.layout-column-wraper {
+    width: 100%;
+}
+
+.column-wrapper {
+    display: flex;
+}
+
+.column-orientation-choser {
+    display: flex;
+    justify-content: center;
 }
 
 /*paragraph*/
