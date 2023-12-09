@@ -126,7 +126,7 @@ export default class Area {
             // Listen for the delete key press
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Delete' && this.dom.classList.contains('area-selected')) {
-                    this.remove();
+                    //this.remove();
                 }
             });
         });
