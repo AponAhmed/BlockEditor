@@ -41,6 +41,9 @@ class Component {
         this.updateActions();
     }
     getProps() {
+        if (this.hasOwnProperty('getPropsChild')) {
+            this.getPropsChild();
+        }
         return this.props;
     }
     remove() {
