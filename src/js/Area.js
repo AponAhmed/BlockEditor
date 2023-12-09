@@ -2,6 +2,7 @@ import Heading from "./Components/Heading.js";
 import Paragraph from "./Components/Paragraph.js";
 import ComponentLists from "./ComponentsRegistry.js";
 
+
 export default class Area {
     constructor(props = {}) {
         this.props = props;
@@ -15,18 +16,13 @@ export default class Area {
         this.parentArea;
         this.contextMenu = [
             'New Area',
+            { label: 'Insert Component', submenu: ComponentLists },
             'Delete Area',
             `${this.direction == "row" ? "Column" : "Row"} Direction`,
             'Resize Area'
         ];
-        this.initContextMenu();
+        //this.initContextMenu();
         this.resizeDimension();
-        // Add dragstart event listener to initiate drag
-        this.dom.addEventListener('dragstart', (event) => this.handleDragStart(event));
-        // Add dragover event listener to allow dropping
-        this.dom.addEventListener('dragover', (event) => this.handleDragOver(event));
-        // Add drop event listener to handle dropping
-        this.dom.addEventListener('drop', (event) => this.handleDrop(event));
         this.eventSet();
         //Child Elements
         this.setComponents(props);
@@ -365,27 +361,4 @@ export default class Area {
         }
     }
 
-    handleDragStart(event) {
-        // Specify data to be transferred during drag
-        event.dataTransfer.setData('text/plain', 'area');
-        event.dataTransfer.effectAllowed = 'move';
-    }
-
-    handleDragOver(event) {
-        event.preventDefault(); // Prevent default behavior (enables drop)
-        event.dataTransfer.dropEffect = 'move'; // Set drop effect to move
-    }
-
-    handleDrop(event) {
-        event.preventDefault(); // Prevent default behavior
-        const data = event.dataTransfer.getData('text/plain');
-        if (data === 'area') {
-            const draggedArea = document.querySelector('.dragging');
-            if (draggedArea) {
-                const index = this.components.indexOf(draggedArea.area);
-                this.components.splice(index, 1);
-                this.dom.appendChild(draggedArea);
-            }
-        }
-    }
 }
