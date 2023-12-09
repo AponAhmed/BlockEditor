@@ -65,6 +65,7 @@ class WpBuilder {
         this.components.forEach(e => {
             data.push(e.getProps());
         });
+        console.log(data);
         this.dataDom.value = JSON.stringify(data);
         //const myObject = JSON.parse(jsonString);
     }

@@ -6,7 +6,6 @@ const ComponentLists = [
     { label: "Column", cls: Column },
     { label: "Heading", cls: Heading },
     { label: "Paragraph", cls: Paragraph },
-
 ];
 
 export default ComponentLists;
