@@ -14,14 +14,15 @@ export default class Area {
         this.dom.classList.add('layout-area');
         this.dom.classList.add('layout-' + this.direction);
         this.parentArea;
-        this.contextMenu = [
-            'New Area',
-            { label: 'Insert Component', submenu: ComponentLists },
-            'Delete Area',
-            `${this.direction == "row" ? "Column" : "Row"} Direction`,
-            'Resize Area'
-        ];
-        //this.initContextMenu();
+
+        this.contextMenuObject = {
+            newArea: { label: "New Area", handler: this.createNewArea },
+            components: { label: "Insert Component", handler: false, submenu: ComponentLists },
+            deleteArea: { label: "Delete Area", handler: this.remove },
+            derectionChanger: { label: `${this.direction == "row" ? "Column" : "Row"} Direction`, handler: this.changeDirection },
+            resize: { label: `Resize`, handler: this.resizeTriger },
+        }
+
         this.resizeDimension();
         this.eventSet();
         //Child Elements
@@ -30,8 +31,60 @@ export default class Area {
         this.updateDimensions();
     }
 
+    setParent(parent) {
+        this.parentArea = parent;
+    }
+
+    showContextMenu(x, y) {
+        const contextMenu = document.createElement('div');
+        contextMenu.classList.add('context-menu');
+        contextMenu.style.position = 'fixed';
+        contextMenu.style.left = `${x}px`;
+        contextMenu.style.top = `${y}px`;
+
+        // Populate the context menu items using this.contextMenuObject
+        Object.keys(this.contextMenuObject).forEach((key) => {
+            const menuItem = this.contextMenuObject[key];
+            const menuItemElement = document.createElement('div');
+            if (menuItem.submenu) {
+                // If it has a submenu
+                menuItemElement.textContent = menuItem.label;
+                const subMenu = document.createElement('div');
+                subMenu.classList.add('sub-menu');
+                menuItem.submenu.forEach((subMenuItem) => {
+                    const subMenuItemElement = document.createElement('div');
+                    subMenuItemElement.textContent = subMenuItem.label;
+                    subMenuItemElement.addEventListener('click', () => {
+                        this.insertComponent(subMenuItem.cls);
+                        this.removeContextMenu();
+                    });
+                    subMenu.appendChild(subMenuItemElement);
+                });
+                menuItemElement.appendChild(subMenu);
+            } else {
+                // If it doesn't have a submenu
+                menuItemElement.textContent = menuItem.label;
+                menuItemElement.addEventListener('click', () => {
+                    menuItem.handler.call();
+                    this.removeContextMenu();
+                });
+            }
+
+            contextMenu.appendChild(menuItemElement);
+        });
+        // Append the context menu to the body
+        document.body.appendChild(contextMenu);
+        // Close the context menu if clicking outside of it
+        document.addEventListener('click', (closeEvent) => {
+            if (!contextMenu.contains(closeEvent.target)) {
+                this.removeContextMenu();
+            }
+        });
+    }
+
     getProps() { //data model For Database
         this.props.direction = this.direction;
+        this.props.type = 'Area';
         let childs = [];
         if (this.components.length > 0) {
             this.components.forEach(c => {
@@ -173,22 +226,19 @@ export default class Area {
     eventSet() {
         // Add a contextmenu event listener to the area's DOM element
         this.dom.addEventListener('contextmenu', (event) => {
+            this.removeContextMenu();
             event.preventDefault(); // Prevent the default context menu
             event.stopPropagation(); // Stop the 
             this.showContextMenu(event.clientX, event.clientY); // Display the custom context menu
         });
         this.dom.addEventListener('click', () => {
-            this.hideContextMenu(); // Hide the context menu on a regular click
+            this.removeContextMenu(); // Hide the context menu on a regular click
         });
 
         //All Event will be here 
         // Add mouseover and mouseout event listeners to show/hide the action bar
         this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
         this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
-    }
-
-    setParent(parent) {
-        this.parentArea = parent;
     }
 
     showActionBar(event) {
@@ -238,19 +288,14 @@ export default class Area {
         }
     }
 
-    initContextMenu() {
-        // Logic to initialize context menu with sub-menu for inserting components
-        this.contextMenu.push({ label: 'Insert Component', submenu: ComponentLists });
-    }
-
-    changeDirection() {
+    changeDirection = () => {
         // Logic to toggle direction and update class
         this.direction = this.direction === 'row' ? 'column' : 'row';
         this.dom.classList.toggle(`layout-column`);
-        this.contextMenu[2] = this.direction === 'row' ? "Column Direction" : "Row Direction";
+        this.contextMenuObject.derectionChanger.label = this.direction === 'row' ? "Column Direction" : "Row Direction";
     }
 
-    remove() {
+    remove = () => {
         // Logic to remove the area from the DOM
         if (this.parentArea) {
             this.parentArea.components = this.parentArea.components.filter(component => component !== this);
@@ -258,81 +303,12 @@ export default class Area {
         this.dom.remove();
     }
 
-    showContextMenu(x, y) {
-        const contextMenu = document.createElement('div');
-        contextMenu.classList.add('context-menu');
-        contextMenu.style.position = 'fixed';
-        contextMenu.style.left = `${x}px`;
-        contextMenu.style.top = `${y}px`;
-        // Populate the context menu items
-        this.contextMenu.forEach((menuItem) => {
-            const menuItemElement = document.createElement('div');
-            if (typeof menuItem === 'object') {
-                menuItemElement.textContent = menuItem.label;
-                const subMenu = document.createElement('div');
-                subMenu.classList.add('sub-menu');
-                menuItem.submenu.forEach((subMenuItem) => {
-                    const subMenuItemElement = document.createElement('div');
-                    subMenuItemElement.textContent = subMenuItem.label;
-                    subMenuItemElement.addEventListener('click', () => {
-                        this.handleMenuItemClick(subMenuItem.cls);
-                        this.hideContextMenu();
-                    });
-                    subMenu.appendChild(subMenuItemElement);
-                });
-                menuItemElement.appendChild(subMenu);
-            } else {
-                menuItemElement.textContent = menuItem;
-                menuItemElement.addEventListener('click', () => {
-                    this.handleMenuItemClick(menuItem);
-                    this.hideContextMenu();
-                });
-            }
-
-            contextMenu.appendChild(menuItemElement);
-        });
-        // Append the context menu to the body
-        document.body.appendChild(contextMenu);
-        // Close the context menu if clicking outside of it
-        document.addEventListener('click', (closeEvent) => {
-            if (!contextMenu.contains(closeEvent.target)) {
-                this.hideContextMenu();
-            }
-        });
-    }
-
-    handleMenuItemClick(menuItem) {
-        switch (menuItem) {
-            case 'New Area':
-                this.createNewArea();
-                break;
-            case 'Column Direction':
-                this.changeDirection();
-                break;
-            case 'Row Direction':
-                this.changeDirection();
-                break;
-            case 'Delete Area':
-                this.remove();
-            case 'Resize Area':
-                this.resizeTriger();
-                break;
-            case 'Close Resize':
-                this.resizeTriger();
-                break;
-            default:
-                this.insertComponent(menuItem);
-                break;
-        }
-
-    }
-
-    resizeTriger() {
+    resizeTriger = () => {
         this.dom.classList.toggle('resize');
         if (this.dom.classList.contains('resize')) {
-            this.contextMenu[3] = "Close Resize";
+            this.contextMenuObject.resize.label = "Close Resize";
         } else {
-            this.contextMenu[3] = "Resize Area";
+            this.contextMenuObject.resize.label = "Resize Area";
         }
     }
 
@@ -347,14 +323,14 @@ export default class Area {
         }
     }
 
-    createNewArea(object = {}) {
+    createNewArea = (object = {}) => {
         const newArea = new Area(object);
         newArea.setParent(this);
         this.components.push(newArea);
         this.dom.appendChild(newArea.dom);
     }
 
-    hideContextMenu() {
+    removeContextMenu() {
         const contextMenu = document.querySelector('.context-menu');
         if (contextMenu) {
             contextMenu.remove();
