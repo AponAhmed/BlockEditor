@@ -18,7 +18,7 @@ class Paragraph extends Component {
 
     }
     updateContent() {
-        this.props.content = this.paragraph.innerHTML.trim();
+        this.props.content = this.paragraph.innerHTML.trim().replace(/<br>\s*$/, '');
     }
 }
 

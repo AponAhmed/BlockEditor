@@ -76,7 +76,8 @@ class Heading extends Component {
     }
 
     updateContent() {
-        this.props.content = this.tag.innerHTML.trim();
+        console.log('Heading updated');
+        this.props.content = this.tag.innerHTML.trim().replace(/<br>\s*$/, '');
     }
 }
 export default Heading;
