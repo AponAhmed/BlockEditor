@@ -19,6 +19,7 @@ class WpBuilder {
         this.renderDom.appendChild(this.ui);
         this.components = [];
         this.buildExistion();
+        //this.objerver(); //Change Tracker
     }
 
     buildUi() {
@@ -58,6 +59,8 @@ class WpBuilder {
     }
 
     checkData() {
+        console.log('Updating data');
+        console.log('--------------------------------');
         let data = [];
         this.components.forEach(e => {
             data.push(e.getProps());
@@ -79,6 +82,29 @@ class WpBuilder {
                 }
             }
         }
+    }
+
+    objerver() {
+        // Options for the observer (which mutations to observe)
+        const config = { attributes: false, childList: true, subtree: true };
+
+        // Callback function to execute when mutations are observed
+        const callback = (mutationsList, observer) => {
+            // Handle changes here
+            for (const mutation of mutationsList) {
+                if (mutation.type === 'attributes') {
+                    this.checkData();
+                } else if (mutation.type === 'childList') {
+                    this.checkData();
+                }
+            }
+        };
+
+        // Create an observer instance linked to the callback function
+        const observer = new MutationObserver(callback);
+
+        // Start observing the target node for configured mutations
+        observer.observe(this.ui, config);
     }
 
 }
