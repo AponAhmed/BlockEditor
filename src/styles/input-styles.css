@@ -1,6 +1,7 @@
 /*Component*/
 .component-wrapper {
     position: relative;
+    width: 100%;
 }
 
 .component-highlight {
@@ -121,12 +122,10 @@
     display: block;
 }
 
-.layout-p-wraper p:focus:focus-visible,
-.layout-h-wraper *:focus-visible {
+
+.ui-creator * :focus-visible {
     outline: none;
 }
-
-
 
 /*Editor*/
 .layout-area .editor {
