@@ -28,6 +28,7 @@ class Heading extends Component {
     addControlSection() {
         this.addAction({
             label: this.currentTag,
+            attr: { title: 'Change ' + this.getComponentName() + " Tag" },
             handler: (e) => {
                 let btn = e.target;
                 // Close the heading changer
