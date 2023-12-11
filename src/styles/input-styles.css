@@ -71,13 +71,22 @@
 }
 
 /*Heading*/
+.ui-creator ul.sub-control,
+.ui-creator .heading-changer {
+    padding: 0;
+    margin: 0;
+}
+
+.ui-creator ul.sub-control li {
+    margin: 0;
+}
 
 .heading-changer,
 .sub-control {
     position: absolute;
     right: 0;
     top: 0;
-    width: 40px;
+    width: 30px;
     background: #fff;
     border: 1px solid #ddd;
     padding: 0;
@@ -90,14 +99,23 @@
 .sub-control li {
     text-align: center;
     list-style: none;
-    padding: 2px 5px;
+    padding: 4px 5px;
     font-size: 12px;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.heading-changer li:last-child,
+.sub-control li:last-child {
+    border-bottom: 0;
 }
 
 .heading-changer li:hover,
 .sub-control li:hover {
-    background: #6dc6e1;
+    background: #dfdfdf;
 }
 
 
@@ -113,6 +131,14 @@
 .layout-h-wraper h5,
 .layout-h-wraper h6 {
     text-align: inherit;
+}
+
+/*List*/
+.ui-creator ul,
+.ui-creator ol {
+    list-style: revert;
+    padding-left: 15px;
+    margin: 0;
 }
 
 /*Common*/
@@ -143,4 +169,55 @@
     width: 100%;
     box-sizing: border-box;
     max-width: 100%;
+}
+
+/*Link*/
+
+.ui-link-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border: 1px solid rgb(204, 204, 204);
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    overflow: hidden;
+    min-width: 320px;
+}
+
+.ui-link-window-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ui-link-window-url,
+.ui-link-window-new-window {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.ui-link-window-content {
+    padding-bottom: 10px;
+}
+
+.ui-link-window-content #linkInput {
+    margin-left: 10px;
+    border: 1px solid #ddd;
+    padding: 4px 5px;
+    border-radius: 3px;
+}
+
+.ui-link-window-footer {
+    padding: 8px 15px;
+    background: #f2f2f2;
+}
+
+.ui-link-window-footer button {
+    padding: 4px 15px;
+    border: 1px solid #c4c4c4;
+    border-radius: 3px;
 }
