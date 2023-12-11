@@ -8,12 +8,13 @@ class Paragraph extends Component {
         this.dom.classList.add('layout-p-wraper');
         // Create a <p> element
         this.paragraph = document.createElement('p');
-        
+
         // Set contentEditable attribute to true
         this.paragraph.contentEditable = true;
         this.paragraph.innerHTML = this.props.content || "Write Here";
         this.dom.appendChild(this.paragraph);
         this.alignmentControl();
+        this.linkControl();
         this.paragraph.addEventListener('keyup', () => this.updateContent())
 
     }

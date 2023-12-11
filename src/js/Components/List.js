@@ -18,6 +18,7 @@ class List extends Component {
         this.renderItems();
 
         this.listTypeControll();
+        this.linkControl();
     }
     initList() {
         if (this.hasOwnProperty('list')) {
