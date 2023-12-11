@@ -1,11 +1,11 @@
 .action-bar {
-    position: absolute;
-    top: -6px;
-    right: 4px;
-    display: flex;
-    background: #eee;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+	position: absolute;
+	top: -4px;
+	right: 4px;
+	display: flex;
+	background: #eee;
+	border-radius: 4px;
+	border: 1px solid #ddd;
 }
 
 .action-icon {

@@ -35,7 +35,7 @@ class WpBuilder {
 
         this.ui.appendChild(this.builder.create('button', "Check Data")
             .attr({ type: "button" })
-            .class('new-area-btn')
+            .class('data-generate-btn')
             .event('click', () => {
                 this.checkData();
             }).element);

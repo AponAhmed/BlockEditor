@@ -42,6 +42,9 @@ class List extends Component {
     listTypeControll() {
         this.addAction({
             label: listTypeIcons[this.props.listType],
+            attr: {
+                title: "List Type"
+            },
             handler: (e) => {
                 let btn = e.target;
                 this.RemovelistTypeChanger();

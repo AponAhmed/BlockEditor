@@ -1,12 +1,12 @@
 .layout-area {
-    border: 1px dotted #b7b7b7;
-    padding: 10px;
-    margin: 0px;
-    min-height: 60px;
-    position: relative;
-    display: flex;
-    box-sizing: border-box;
-    flex: auto;
+	border: 1px dotted #ececec;
+	padding: 10px;
+	margin: 0px;
+	min-height: 60px;
+	position: relative;
+	display: flex;
+	box-sizing: border-box;
+	flex: auto;
 }
 
 .layout-area:empty {

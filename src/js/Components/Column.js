@@ -14,11 +14,10 @@ class Column extends Component {
     constructor(parentComponent, props = {}) {
         super(parentComponent, 'Column');
         this.props = { ...this.props, ...props };
-        this.components = this.props.childs || [];
+        this.components = [];
         this.dom.classList.add('layout-column-wraper');
         this.columnDom = this.domBuilder.create('div').class('column-wrapper').getElement();
-
-        if (!this.props.hasOwnProperty('columnOrientation') || this.props.columnOrientation == '') {
+        if (!this.props.hasOwnProperty('childs') || this.props.childs == '') {
             this.OpenOrientationChoser();
         } else {
             this.renderExistingColumns();
@@ -27,11 +26,10 @@ class Column extends Component {
     }
 
     getPropsChild = function () {
-        this.props.direction = this.direction;
         let childs = [];
         if (this.components.length > 0) {
             this.components.forEach(c => {
-                childs.push(c.getProps());
+                childs.push(c.getProps());//here
             });
         }
         this.props.childs = childs;
@@ -53,7 +51,7 @@ class Column extends Component {
 
         Oientations.forEach((option) => {
             let icoSvg = ColumnIcon[option];
-            choser.appendChild(this.domBuilder.create('div', icoSvg, true).event('click', (e) => {
+            choser.appendChild(this.domBuilder.create('div', icoSvg, true).attr({ title: option }).event('click', (e) => {
                 this.initColumns(option);
             }).class('orient').getElement());
         });
@@ -72,7 +70,12 @@ class Column extends Component {
     }
 
     renderExistingColumns() {
-
+        this.props.childs.forEach(c => {
+            let area = new Area(c);
+            area.setParent(this);
+            this.components.push(area);
+            this.columnDom.appendChild(area.dom);
+        });
     }
 
 }

@@ -1,4 +1,6 @@
+import Column from "./Components/Column.js";
 import Heading from "./Components/Heading.js";
+import List from "./Components/List.js";
 import Paragraph from "./Components/Paragraph.js";
 import ComponentLists from "./ComponentsRegistry.js";
 
@@ -53,7 +55,11 @@ export default class Area {
                 subMenu.classList.add('sub-menu');
                 menuItem.submenu.forEach((subMenuItem) => {
                     const subMenuItemElement = document.createElement('div');
-                    subMenuItemElement.textContent = subMenuItem.label;
+                    subMenuItemElement.classList.add('sub-context-menu');
+                    const lbl = document.createElement('label');
+                    lbl.textContent = subMenuItem.label;
+                    subMenuItemElement.innerHTML = subMenuItem.hasOwnProperty('icon') ? subMenuItem.icon : '';
+                    subMenuItemElement.appendChild(lbl);
                     subMenuItemElement.addEventListener('click', () => {
                         this.insertComponent(subMenuItem.cls);
                         this.removeContextMenu();
@@ -205,6 +211,16 @@ export default class Area {
                     this.dom.appendChild(comObj.dom);
                 } else if (c.type == "P") {
                     let comObj = new Paragraph(this, c);
+                    this.components.push(comObj);
+                    this.dom.appendChild(comObj.dom);
+                }
+                else if (c.type == "List") {
+                    let comObj = new List(this, c);
+                    this.components.push(comObj);
+                    this.dom.appendChild(comObj.dom);
+                }
+                else if (c.type == "Column") {
+                    let comObj = new Column(this, c);
                     this.components.push(comObj);
                     this.dom.appendChild(comObj.dom);
                 } else if (c.type == "Image") {

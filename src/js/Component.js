@@ -1,6 +1,7 @@
 import DOMBuilder from "./DomBuilder";
 
 const IconsSet = {
+    remove: '<svg height="16" width="14" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"/></svg>',
     left: '<svg height="16" width="14" viewBox="0 0 448 512"><path d="M288 64c0 17.7-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32H256c17.7 0 32 14.3 32 32zm0 256c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H256c17.7 0 32 14.3 32 32zM0 192c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>',
     center: '<svg height="16" width="14" viewBox="0 0 448 512"><path d="M352 64c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32s14.3 32 32 32H320c17.7 0 32-14.3 32-32zm96 128c0-17.7-14.3-32-32-32H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32zM0 448c0 17.7 14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H32c-17.7 0-32 14.3-32 32zM352 320c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32s14.3 32 32 32H320c17.7 0 32-14.3 32-32z"/></svg>',
     justify: '<svg height="16" width="14" viewBox="0 0 448 512"><path d="M448 64c0-17.7-14.3-32-32-32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32zm0 256c0-17.7-14.3-32-32-32H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32zM0 192c0 17.7 14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H32c-17.7 0-32 14.3-32 32zM448 448c0-17.7-14.3-32-32-32H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32z"/></svg>',
@@ -37,8 +38,8 @@ class Component {
 
         // Create a remove button as a common action
         this.addAction({
-            label: '&times;',
-            attr: { title: 'Remove ' + this.getComponentName() },
+            label: this.geticon('remove'),
+            attr: { title: 'Remove ' + this.getComponentName(), class: 'component-action-btn component-remove-btn' },
             handler: () => this.remove(),
         });
         this.updateActions();
@@ -151,14 +152,12 @@ class Component {
         this.ceretElm = null;
         document.addEventListener("selectionchange", () => {
             let selectedObject = document.getSelection();
-            console.log(selectedObject);
             let selectedStr = selectedObject.toString();
-            if (selectedStr.length > 0) {
+            if (selectedStr.length > 0) {// && selectedObject.type=="Caret"
                 this.selectedText = selectedStr;
                 this.selectedObject.anchorNode = selectedObject.anchorNode;
                 this.selectedObject.anchorOffset = selectedObject.anchorOffset;
                 this.selectedObject.focusOffset = selectedObject.focusOffset;
-
                 // Make a copy of the Selection object
             }
         });
@@ -192,6 +191,7 @@ class Component {
                     // // Add event listener for the OK button
                     const okButton = this.linkWindow.querySelector('#okButton');
                     const cancelBtn = this.linkWindow.querySelector('#cancelBtn');
+                    const newWindowCheckbox = this.linkWindow.querySelector("#newWindowCheckbox");
                     cancelBtn.addEventListener('click', () => {
                         this.selectedText = "";
                         this.selectedObject = {};
@@ -205,7 +205,7 @@ class Component {
                         let elm = this.selectedObject.anchorNode.parentElement;
                         let fullHtml = elm.innerHTML;
 
-                        elm.innerHTML = this.replaceSubstringInRange(fullHtml, this.createLink(linkUrl), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
+                        elm.innerHTML = this.replaceSubstringInRange(fullHtml, this.createLink(linkUrl, newWindowCheckbox.checked), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
                         this.linkWindow.remove();
                         this.selectedText = ""
                         this.selectedObject = {};
@@ -247,8 +247,9 @@ class Component {
         this.dom.appendChild(this.linkWindow);
     }
 
-    createLink(linkUrl) {
-        const newLink = `<a href="${linkUrl}" target="_blank">${this.selectedText}</a>`;
+    createLink(linkUrl, newWindow = false) {
+
+        const newLink = `<a href="${linkUrl}" ${newWindow ? 'target="_blank"' : ''}>${this.selectedText}</a>`;
         return newLink;
     }
 

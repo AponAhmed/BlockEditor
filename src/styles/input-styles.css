@@ -13,13 +13,23 @@
     right: 0;
     top: 50%;
     flex-direction: column;
-    background: rgba(227, 227, 227, 0.8);
+    background: rgba(255, 255, 255, 0.52);
     display: none;
     width: 25px;
     border-radius: 4px;
     border: 1px solid rgba(0, 0, 0, .05);
     z-index: 9;
     transform: translate(0, -50%);
+    backdrop-filter: blur(4px);
+    transition: all .1s;
+}
+
+.control-section:hover {
+    transform: scale(1.2) translate(0, -42%);
+}
+
+.control-section .component-action-btn.component-remove-btn:hover {
+    color: #f71616;
 }
 
 .component-wrapper:hover .control-section {
@@ -64,6 +74,24 @@
     display: flex;
     justify-content: center;
 }
+
+
+.column-orientation-choser div.orient svg {
+    fill: #b0b0b0;
+  }
+  .column-orientation-choser div.orient:hover {
+    background: #f7f7f7;
+    border-radius: 11px;
+  }
+  .column-orientation-choser div.orient {
+    margin: 0 4px;
+    line-height: 0;
+    padding: 6px;
+    box-sizing: border-box;
+  }
+  .column-orientation-choser div.orient:hover svg {
+    fill: #575757;
+  }
 
 /*paragraph*/
 .layout-p-wraper p {
