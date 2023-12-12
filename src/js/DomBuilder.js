@@ -113,6 +113,19 @@ export default class DOMBuilder {
     }
 
     /**
+    * Set the value of an input element.
+    * 
+    * @param {string} value - The value to set.
+    * @returns {DOMBuilder} - The current DOMBuilder instance.
+    */
+    value(value) {
+        if (this.element instanceof HTMLInputElement) {
+            this.element.value = value;
+        }
+        return this;
+    }
+
+    /**
      * Append one or more elements to the current element.
      * 
      * @param {(HTMLElement|DOMBuilder|HTMLElement[]|DOMBuilder[])} elements - Elements to append.

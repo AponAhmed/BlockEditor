@@ -3,6 +3,7 @@ import Heading from "./Components/Heading.js";
 import List from "./Components/List.js";
 import Paragraph from "./Components/Paragraph.js";
 import ComponentLists from "./ComponentsRegistry.js";
+import DOMBuilder from "./DomBuilder.js";
 
 
 export default class Area {
@@ -15,7 +16,10 @@ export default class Area {
         this.dom = document.createElement('div');
         this.dom.classList.add('layout-area');
         this.dom.classList.add('layout-' + this.direction);
+
         this.parentArea;
+        this.customProps = this.props.more || { customClass: '', padding: 0, bg: false, border: false, borderRadius: 0 };
+
 
         this.contextMenuObject = {
             newArea: { label: "New Area", handler: this.createNewArea },
@@ -23,6 +27,7 @@ export default class Area {
             deleteArea: { label: "Delete Area", handler: this.remove },
             derectionChanger: { label: `${this.direction == "row" ? "Column" : "Row"} Direction`, handler: this.changeDirection },
             resize: { label: `Resize`, handler: this.resizeTriger },
+            properties: { label: `Properties`, handler: this.propertiesWindowinit },
         }
 
         this.resizeDimension();
@@ -98,6 +103,7 @@ export default class Area {
             });
         }
         this.props.childs = childs;
+        this.props.more = this.customProps;
         return this.props;
     }
 
@@ -344,6 +350,47 @@ export default class Area {
         newArea.setParent(this);
         this.components.push(newArea);
         this.dom.appendChild(newArea.dom);
+    }
+
+    showPropertyWindow = () => {
+        this.PropertyWindow.classList.toggle('open');
+    }
+
+    propertiesWindowinit = () => {
+        let domBuilder = new DOMBuilder();
+        this.PropertyWindow = domBuilder.create('div').class('area-property-window').element;
+        this.PropertyWindow.appendChild(domBuilder.create('div', "&times;", true).event('click', () => {
+            this.PropertyWindow.remove();
+        }).class('property-window-close').element);
+        this.PropertyWindow.appendChild(domBuilder.create('div', "Properties").class('property-window-header').element);
+        //{ customClass: '', padding: 0, bg: false, border: false, borderRadius: 0 }
+
+        let classProps = domBuilder.create('div').class('property-container').element;
+        classProps.appendChild(domBuilder.create('label', 'Custom Class').element);
+        classProps.appendChild(domBuilder.create('input')
+            .event('keyup', (e) => {
+                this.customProps.customClass = e.target.value;
+            }).attr({ type: "text" }).value(this.customProps.customClass).class('property-input').element);
+
+        let paddindProps = domBuilder.create('div').class('property-container').element;
+        paddindProps.appendChild(domBuilder.create('label', 'Padding').element);
+        paddindProps.appendChild(domBuilder.create('input')
+            .event('keyup', (e) => {
+                this.customProps.padding = e.target.value;
+            }).attr({ type: "text" }).class('property-input').element);
+
+        let background = domBuilder.create('div').class('property-container').element;
+        background.appendChild(domBuilder.create('label', 'Background').element);
+        background.appendChild(domBuilder.create('input')
+            .event('keyup', (e) => {
+                this.customProps.bg = e.target.value;
+            }).attr({ type: "color" }).class('property-input').element);
+
+        this.PropertyWindow.appendChild(classProps);
+        this.PropertyWindow.appendChild(background);
+        this.PropertyWindow.appendChild(paddindProps);
+
+        this.dom.appendChild(this.PropertyWindow);
     }
 
     removeContextMenu() {

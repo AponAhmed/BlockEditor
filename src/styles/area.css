@@ -1,12 +1,12 @@
 .layout-area {
-	border: 1px dotted #ececec;
-	padding: 10px;
-	margin: 0px;
-	min-height: 60px;
-	position: relative;
-	display: flex;
-	box-sizing: border-box;
-	flex: auto;
+    border: 1px dotted #ececec;
+    padding: 10px;
+    margin: 0px;
+    min-height: 60px;
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    flex: auto;
 }
 
 .layout-area:empty {
@@ -33,4 +33,51 @@
 
 .layout-column {
     flex-direction: column;
+}
+
+
+/*Property*/
+
+.area-property-window {
+    position: absolute;
+    background: rgba(255, 255, 255, .5);
+    padding: 20px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 2px 5px 15px #c6c6c6;
+    z-index: 5;
+    backdrop-filter: blur(17px);
+    border-radius: 4px;
+    padding-top: 41px;
+}
+
+.property-window-close {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    line-height: 0;
+    padding: 8px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.property-window-header {
+    position: absolute;
+    left: 8px;
+    top: 5px;
+}
+
+.property-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 6px 0px;
+}
+
+.property-input {
+    margin-left: 27px;
+    max-width: 80px;
+}
+
+.property-container label {
+    font-size: 14px;
 }
