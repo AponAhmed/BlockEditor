@@ -64,15 +64,15 @@
 }
 
 .property-window-close {
-	border: 0;
-	background: transparent;
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	font-size: 18px;
-	line-height: 1;
-	cursor: pointer;
-	color: #999;
+    border: 0;
+    background: transparent;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
 }
 
 .property-window-header {
@@ -184,7 +184,7 @@
 
 .component-browser {
     position: absolute;
-    top: 0%;
+    top: 5%;
     left: 50%;
     transform: translate(-50%, 0%);
     padding: 10px;
