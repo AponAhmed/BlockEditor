@@ -36,7 +36,89 @@ export default class Area {
         this.setComponents(props);
         this.makeResizable();
         this.updateDimensions();
+        this.newComponentBtn();
     }
+
+    newComponentBtn() {
+        let btnArea = document.createElement('div');
+        btnArea.classList.add('new-component-area');
+        let btn = document.createElement('span');
+        btn.classList.add('btn-new-component');
+        btn.innerHTML = `<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 112v288M400 256H112"></path></svg>`;
+        btnArea.appendChild(btn);
+        btn.addEventListener('click', () => {
+            this.openComponentBrowser();
+        })
+        this.dom.appendChild(btnArea);
+    }
+
+    openComponentBrowser() {
+        this.componentBrowser = document.createElement('div');
+        this.componentBrowser.classList.add('component-browser');
+
+       
+
+        let compBrowserHead = document.createElement('div');
+        compBrowserHead.classList.add('comp-browser-head');
+        let label = document.createElement('label');
+        label.textContent = "Components";
+        compBrowserHead.appendChild(label);
+         // Add close button
+         const closeButton = document.createElement('button');
+         closeButton.innerHTML = '&times;';
+         closeButton.addEventListener('click', () => {
+             this.componentBrowser.remove();
+         });
+
+        compBrowserHead.appendChild(closeButton);
+        this.componentBrowser.appendChild(compBrowserHead);
+        // Add search input
+
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Filter';
+        searchInput.classList.add('component-search-input');
+        searchInput.addEventListener('input', () => {
+            this.filterComponents(searchInput.value);
+        });
+        this.componentBrowser.appendChild(searchInput);
+
+        // Container for component items with max height and overflow-y scroll
+        const componentContainer = document.createElement('div');
+        componentContainer.classList.add('component-container');
+        this.componentBrowser.appendChild(componentContainer);
+
+        ComponentLists.forEach((com) => {
+            const comElement = document.createElement('div');
+            comElement.classList.add('component-item');
+            const lbl = document.createElement('label');
+            lbl.textContent = com.label;
+            comElement.innerHTML = com.hasOwnProperty('icon') ? com.icon : '';
+            comElement.appendChild(lbl);
+            comElement.addEventListener('click', () => {
+                this.componentBrowser.remove();
+                this.insertComponent(com.cls);
+                this.removeContextMenu();
+            });
+            componentContainer.appendChild(comElement);
+        });
+
+        this.dom.appendChild(this.componentBrowser);
+    }
+
+    filterComponents(searchTerm) {
+        const components = this.componentBrowser.querySelectorAll('.component-item');
+        components.forEach((com) => {
+            const label = com.querySelector('label').textContent.toLowerCase();
+            if (label.includes(searchTerm.toLowerCase())) {
+                com.style.display = 'flex';
+            } else {
+                com.style.display = 'none';
+            }
+        });
+    }
+
+
 
     setParent(parent) {
         this.parentArea = parent;
@@ -242,6 +324,8 @@ export default class Area {
                 //     this.dom.appendChild(comObj.dom);
                 // }
             });
+        } else {
+            this.dom.classList.add("no-components");
         }
     }
 
@@ -259,8 +343,8 @@ export default class Area {
 
         //All Event will be here 
         // Add mouseover and mouseout event listeners to show/hide the action bar
-        this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
-        this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
+        //this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
+        //this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
     }
 
     showActionBar(event) {
@@ -343,6 +427,10 @@ export default class Area {
         } else {
             this.dom.appendChild(comObj.dom);
         }
+
+        if (this.dom.classList.contains('no-components')) {
+            this.dom.classList.remove('no-components');
+        }
     }
 
     createNewArea = (object = {}) => {
@@ -350,6 +438,9 @@ export default class Area {
         newArea.setParent(this);
         this.components.push(newArea);
         this.dom.appendChild(newArea.dom);
+        if (this.dom.classList.contains('no-components')) {
+            this.dom.classList.remove('no-components');
+        }
     }
 
     showPropertyWindow = () => {
