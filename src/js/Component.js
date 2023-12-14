@@ -22,7 +22,7 @@ class Component {
         this.parentArea = parent;
         this.domBuilder = new DOMBuilder();
         this.props = { type: this.type };
-
+        this.moreProps = this.props.more || {};
         this.actions = [];
         this.initDom();
         this.actionDomObj = {};
@@ -103,7 +103,28 @@ class Component {
     }
 
     moreOptionControl = () => {
-        console.log("More Customize");
+        this.propertyWindow = this.domBuilder.create("div").class(['layout-window']).element;
+        let head = this.domBuilder.create("div").class('window-header-head').getElement();
+        head.appendChild(this.domBuilder.create("div", this.getComponentName() + " Properties").class('header-title').getElement());
+        head.appendChild(this.domBuilder.create("label", "&times;", true).class('remove-layout-window').event('click', () => {
+            this.removePropertyWindow();
+        }).getElement());
+        this.propertyWindow.appendChild(head);
+        //Default properties for all Components
+        //this.moreProps
+        //Custom Properties for individual Components
+        if (this.hasOwnProperty('individualProperties')) {
+            let customProperties = this.domBuilder.create("div").class('individual-properties').element;
+            customProperties.appendChild(this.individualProperties.call());
+            this.propertyWindow.appendChild(customProperties);
+        }
+
+        this.dom.appendChild(this.propertyWindow);
+    }
+
+    removePropertyWindow = () => {
+        if (this.hasOwnProperty('propertyWindow'))
+            this.propertyWindow.remove();
     }
 
     geticon(name) {
