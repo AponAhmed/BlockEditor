@@ -1,4 +1,5 @@
 import DOMBuilder from "./DomBuilder";
+import Draggable from "./Draggable";
 
 const IconsSet = {
     remove: '<svg height="16" width="14" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"/></svg>',
@@ -110,6 +111,7 @@ class Component {
             this.removePropertyWindow();
         }).getElement());
         this.propertyWindow.appendChild(head);
+        new Draggable(this.propertyWindow, head);
         //Default properties for all Components
         //this.moreProps
         //Custom Properties for individual Components

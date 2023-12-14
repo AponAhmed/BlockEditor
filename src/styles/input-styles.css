@@ -62,24 +62,24 @@
 }
 
 .layout-window {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #e8e8eb;
-    border-radius: 6px;
-    z-index: 9;
-    padding-top: 0;
-    box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 10px;
+	background: #fff;
+	border: 1px solid #e8e8eb;
+	border-radius: 6px;
+	z-index: 9;
+	padding-top: 0;
+	box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
 }
 
 .window-header-head {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    margin-bottom: 4px;
+	display: flex;
+	justify-content: space-between;
+	padding: 5px 0;
+	margin-bottom: 4px;
+	cursor: move;
 }
 .window-header-head .header-title {
 	color: #444;

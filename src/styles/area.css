@@ -39,16 +39,17 @@
 /*Property*/
 
 .area-property-window {
-    position: absolute;
-    background: #fff;
-    padding: 20px;
-    border: 1px solid #e8e8eb;
-    box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
-    z-index: 5;
-    border-radius: 6px;
-    padding-top: 41px;
+	position: absolute;
+	background: #fff;
+	padding: 20px;
+	border: 1px solid #e8e8eb;
+	box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
+	z-index: 5;
+	border-radius: 6px;
+	padding-top: 41px;
+	left: 0;
+	top: 0;
 }
-
 .property-window-close {
     position: absolute;
     right: 0;
@@ -64,22 +65,26 @@
 }
 
 .property-window-close {
-    border: 0;
-    background: transparent;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
-    color: #999;
+	border: 0;
+	background: transparent;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+	color: #999;
+	z-index: 1;
 }
-
 .property-window-header {
-    position: absolute;
-    left: 10px;
-    top: 6px;
-    color: #444;
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: #444;
+	width: 100%;
+	padding: 6px;
+	box-sizing: border-box;
+	cursor: move;
 }
 
 .property-container {

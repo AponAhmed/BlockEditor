@@ -2,9 +2,23 @@ import Column from "./Components/Column.js";
 import Heading from "./Components/Heading.js";
 import List from "./Components/List.js";
 import Paragraph from "./Components/Paragraph.js";
+import WPEditor from "./Components/WPEditor.js";
+import WPImageBrowser from "./Components/WPImageBrowser.js";
 import ComponentLists from "./ComponentsRegistry.js";
 import DOMBuilder from "./DomBuilder.js";
+import Draggable from "./Draggable.js";
 
+
+
+const ContextIcon = {
+    newArea: `<svg viewBox="0 0 512 512"><rect x="128" y="128" width="336" height="336" rx="57" ry="57" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"/><path d="M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24M296 216v160M376 296H216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`,
+    component: `<svg viewBox="0 0 512 512"><rect x="48" y="48" width="176" height="176" rx="20" ry="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><rect x="288" y="48" width="176" height="176" rx="20" ry="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><rect x="48" y="288" width="176" height="176" rx="20" ry="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><rect x="288" y="288" width="176" height="176" rx="20" ry="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`,
+    delete: `<svg viewBox="0 0 512 512"><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352"/><path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`,
+    directionRow: `<svg class="direction-icon" width="152" height="117" viewBox="0 0 152 117" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.5" y="5.5" width="141" height="106" rx="11.5" fill="#D9D9D9" stroke="black" stroke-width="11"/><line x1="50%" x2="50%" y2="110" stroke="black" stroke-width="11"/></svg>`,
+    directionCol: `<svg class="direction-icon" width="152" height="117" viewBox="0 0 152 117" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.5" y="5.5" width="141" height="106" rx="11.5" fill="#D9D9D9" stroke="black" stroke-width="11"/><line y1="50%" x2="147" y2="50%" stroke="black" stroke-width="11"/></svg>`,
+    resize: `<svg  class="ionicon" viewBox="0 0 512 512"><path d="M144 48v272a48 48 0 0048 48h272" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path d="M368 304V192a48 48 0 00-48-48H208M368 368v96M144 144H48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`,
+    properties: `<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 128h80M64 128h240M368 384h80M64 384h240M208 256h240M64 256h80"/><circle cx="336" cy="128" r="32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="176" cy="256" r="32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="336" cy="384" r="32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`,
+};
 
 export default class Area {
     constructor(props = {}) {
@@ -22,12 +36,33 @@ export default class Area {
 
 
         this.contextMenuObject = {
-            newArea: { label: "New Area", handler: this.createNewArea },
-            components: { label: "Insert Component", handler: false, submenu: ComponentLists },
-            deleteArea: { label: "Delete Area", handler: this.remove },
-            derectionChanger: { label: `${this.direction == "row" ? "Column" : "Row"} Direction`, handler: this.changeDirection },
-            resize: { label: `Resize`, handler: this.resizeTriger },
-            properties: { label: `Properties`, handler: this.propertiesWindowinit },
+            newArea: {
+                label: "New Area",
+                handler: this.createNewArea,
+                icon: ContextIcon.newArea
+            },
+            components: {
+                label: "Insert Component",
+                handler: false,
+                submenu: ComponentLists,
+                icon: ContextIcon.component
+            },
+            deleteArea: {
+                label: "Delete Area",
+                handler: this.remove,
+                icon: ContextIcon.delete
+            },
+            derectionChanger: {
+                label: `${this.direction == "row" ? "Column" : "Row"} Direction`,
+                handler: this.changeDirection,
+                icon: this.direction == "row" ? ContextIcon.directionCol : ContextIcon.directionRow,
+            },
+            resize: {
+                label: `Resize`,
+                handler: this.resizeTriger,
+                icon: ContextIcon.resize
+            },
+            properties: { label: `Properties`, handler: this.propertiesWindowinit, icon: ContextIcon.properties },
         }
 
         this.resizeDimension();
@@ -56,19 +91,19 @@ export default class Area {
         this.componentBrowser = document.createElement('div');
         this.componentBrowser.classList.add('component-browser');
 
-       
+
 
         let compBrowserHead = document.createElement('div');
         compBrowserHead.classList.add('comp-browser-head');
         let label = document.createElement('label');
         label.textContent = "Components";
         compBrowserHead.appendChild(label);
-         // Add close button
-         const closeButton = document.createElement('button');
-         closeButton.innerHTML = '&times;';
-         closeButton.addEventListener('click', () => {
-             this.componentBrowser.remove();
-         });
+        // Add close button
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '&times;';
+        closeButton.addEventListener('click', () => {
+            this.componentBrowser.remove();
+        });
 
         compBrowserHead.appendChild(closeButton);
         this.componentBrowser.appendChild(compBrowserHead);
@@ -135,9 +170,12 @@ export default class Area {
         Object.keys(this.contextMenuObject).forEach((key) => {
             const menuItem = this.contextMenuObject[key];
             const menuItemElement = document.createElement('div');
+            menuItemElement.classList.add('context-menu-item');
+            menuItemElement.innerHTML = menuItem.hasOwnProperty('icon') ? menuItem.icon : '';
+            const lbl = document.createElement('label');
+            lbl.textContent = menuItem.label;
+            menuItemElement.appendChild(lbl);
             if (menuItem.submenu) {
-                // If it has a submenu
-                menuItemElement.textContent = menuItem.label;
                 const subMenu = document.createElement('div');
                 subMenu.classList.add('sub-menu');
                 menuItem.submenu.forEach((subMenuItem) => {
@@ -156,7 +194,7 @@ export default class Area {
                 menuItemElement.appendChild(subMenu);
             } else {
                 // If it doesn't have a submenu
-                menuItemElement.textContent = menuItem.label;
+                // menuItemElement.textContent = menuItem.label;
                 menuItemElement.addEventListener('click', () => {
                     menuItem.handler.call();
                     this.removeContextMenu();
@@ -292,7 +330,7 @@ export default class Area {
             props.childs.forEach(c => {
                 if (c.type == "Area") {
                     this.createNewArea(c);
-                } else if (c.type == "H") {
+                } else if (c.type == "H") { // here need to optimize redundant
                     //For Other Components
                     let comObj = new Heading(this, c);
                     this.components.push(comObj);
@@ -311,18 +349,17 @@ export default class Area {
                     let comObj = new Column(this, c);
                     this.components.push(comObj);
                     this.dom.appendChild(comObj.dom);
-                } else if (c.type == "Image") {
-
                 }
-
-                // let comObj = new componentClass(this);
-                // this.components.push(comObj);
-                // if (comObj.type == "Editor") {
-                //     this.dom.appendChild(comObj.dom);
-                //     comObj.initializeWPEditor();
-                // } else {
-                //     this.dom.appendChild(comObj.dom);
-                // }
+                else if (c.type == "Image") {
+                    let comObj = new WPImageBrowser(this, c);
+                    this.components.push(comObj);
+                    this.dom.appendChild(comObj.dom);
+                } else if (c.type == "Editor") {
+                    let comObj = new WPEditor(this, c);
+                    this.components.push(comObj);
+                    this.dom.appendChild(comObj.dom);
+                    comObj.initializeWPEditor();
+                }
             });
         } else {
             this.dom.classList.add("no-components");
@@ -343,8 +380,8 @@ export default class Area {
 
         //All Event will be here 
         // Add mouseover and mouseout event listeners to show/hide the action bar
-        //this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
-        //this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
+        this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
+        this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
     }
 
     showActionBar(event) {
@@ -365,9 +402,9 @@ export default class Area {
         const icon3 = document.createElement('span');
         icon3.classList.add('action-icon');
         if (this.direction == 'column') {
-            icon3.innerHTML = '<svg width="152" height="117" viewBox="0 0 152 117" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.5" y="5.5" width="141" height="106" rx="11.5" fill="#D9D9D9" stroke="black" stroke-width="11"/><line x1="50%" x2="50%" y2="110" stroke="black" stroke-width="11"/></svg>';
+            icon3.innerHTML = ContextIcon.directionRow;
         } else {
-            icon3.innerHTML = '<svg width="152" height="117" viewBox="0 0 152 117" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5.5" y="5.5" width="141" height="106" rx="11.5" fill="#D9D9D9" stroke="black" stroke-width="11"/><line y1="50%" x2="147" y2="50%" stroke="black" stroke-width="11"/></svg>';
+            icon3.innerHTML = ContextIcon.directionCol;
         }
 
 
@@ -399,6 +436,7 @@ export default class Area {
         this.direction = this.direction === 'row' ? 'column' : 'row';
         this.dom.classList.toggle(`layout-column`);
         this.contextMenuObject.derectionChanger.label = this.direction === 'row' ? "Column Direction" : "Row Direction";
+        this.contextMenuObject.derectionChanger.icon = this.direction == "row" ? ContextIcon.directionCol : ContextIcon.directionRow;
     }
 
     remove = () => {
@@ -453,9 +491,10 @@ export default class Area {
         this.PropertyWindow.appendChild(domBuilder.create('div', "&times;", true).event('click', () => {
             this.PropertyWindow.remove();
         }).class('property-window-close').element);
-        this.PropertyWindow.appendChild(domBuilder.create('div', "Properties").class('property-window-header').element);
+        let header = domBuilder.create('div', "Area Properties").class('property-window-header').element;
+        this.PropertyWindow.appendChild(header);
         //{ customClass: '', padding: 0, bg: false, border: false, borderRadius: 0 }
-
+        new Draggable(this.PropertyWindow, header);
         let classProps = domBuilder.create('div').class('property-container').element;
         classProps.appendChild(domBuilder.create('label', 'Custom Class').element);
         classProps.appendChild(domBuilder.create('input')
@@ -468,14 +507,16 @@ export default class Area {
         paddindProps.appendChild(domBuilder.create('input')
             .event('keyup', (e) => {
                 this.customProps.padding = e.target.value;
-            }).attr({ type: "text" }).class('property-input').element);
+                this.dom.style.padding = e.target.value + "px";
+            }).attr({ type: "text" }).value(this.customProps.padding).class('property-input').element);
 
         let background = domBuilder.create('div').class('property-container').element;
         background.appendChild(domBuilder.create('label', 'Background').element);
         background.appendChild(domBuilder.create('input')
-            .event('keyup', (e) => {
+            .event('change', (e) => {
                 this.customProps.bg = e.target.value;
-            }).attr({ type: "color" }).class('property-input').element);
+                this.dom.style.background = e.target.value;
+            }).attr({ type: "color" }).value(this.customProps.bg).class('property-input').element);
 
         this.PropertyWindow.appendChild(classProps);
         this.PropertyWindow.appendChild(background);
