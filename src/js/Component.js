@@ -156,7 +156,10 @@ class Component {
                 headingOptions.forEach((option) => {
                     const listItem = document.createElement('li');
                     listItem.innerHTML = this.geticon(option);
-                    listItem.addEventListener('click', () => this.changeAlign(option, btn));
+                    listItem.addEventListener('click', (e) => {
+                        this.parentArea.hideActionBar(e);
+                        this.changeAlign(option, btn)
+                    });
                     alignChanger.appendChild(listItem);
                 });
                 this.dom.appendChild(alignChanger);
@@ -225,20 +228,29 @@ class Component {
                     const okButton = this.linkWindow.querySelector('#okButton');
                     const cancelBtn = this.linkWindow.querySelector('#cancelBtn');
                     const newWindowCheckbox = this.linkWindow.querySelector("#newWindowCheckbox");
-                    cancelBtn.addEventListener('click', () => {
+                    cancelBtn.addEventListener('click', (e) => {
+                        this.parentArea.hideActionBar(e);
                         this.selectedText = "";
                         this.selectedObject = {};
                         this.linkWindow.remove();
                     });
 
-                    okButton.addEventListener('click', () => {
+                    okButton.addEventListener('click', (e) => {
+                        this.parentArea.hideActionBar(e);
                         const linkInput = this.linkWindow.querySelector('#linkInput');
                         const linkUrl = linkInput.value;
                         // Create the link and replace the selected text
                         let elm = this.selectedObject.anchorNode.parentElement;
-                        let fullHtml = elm.innerHTML;
 
-                        elm.innerHTML = this.replaceSubstringInRange(fullHtml, this.createLink(linkUrl, newWindowCheckbox.checked), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
+                        let txtNode = this.selectedObject.anchorNode.nodeValue;
+                        let modifiedTextNode = this.replaceSubstringInRange(txtNode, this.createLink(linkUrl, newWindowCheckbox.checked), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
+                        console.log(elm.innerHTML);
+                        console.log(txtNode);
+                        console.log(modifiedTextNode);
+
+                        elm.innerHTML = elm.innerHTML.replace(txtNode, modifiedTextNode);
+                        //elm.innerHTML = this.replaceSubstringInRange(fullHtml, this.createLink(linkUrl, newWindowCheckbox.checked), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
+
                         this.linkWindow.remove();
                         this.selectedText = ""
                         this.selectedObject = {};

@@ -58,7 +58,10 @@ class List extends Component {
                 headingOptions.forEach((option) => {
                     const listItem = document.createElement('li');
                     listItem.innerHTML = listTypeIcons[option];
-                    listItem.addEventListener('click', () => this.listTypeChange(option, btn));
+                    listItem.addEventListener('click', (e) => {
+                        this.parentArea.hideActionBar(e);
+                        this.listTypeChange(option, btn)
+                    });
                     listStypeUi.appendChild(listItem);
                 });
                 this.dom.appendChild(listStypeUi);
