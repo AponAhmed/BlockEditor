@@ -3,7 +3,7 @@
 The Block Editor is a robust web development tool that simplifies the creation of dynamic and customizable HTML layouts. Developed with HTML, CSS, and JavaScript, it empowers web developers to efficiently construct content-rich pages.
 
 ## Demo
-A quick preview [Codepen](https://codepen.io/apon22/pen/abXPPyB)
+A quick preview [Codepen](https://codepen.io/apon22/full/abXPPyB)
 
 ## Key Components
 
