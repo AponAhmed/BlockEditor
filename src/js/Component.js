@@ -244,10 +244,7 @@ class Component {
 
                         let txtNode = this.selectedObject.anchorNode.nodeValue;
                         let modifiedTextNode = this.replaceSubstringInRange(txtNode, this.createLink(linkUrl, newWindowCheckbox.checked), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
-                        console.log(elm.innerHTML);
-                        console.log(txtNode);
-                        console.log(modifiedTextNode);
-
+                        
                         elm.innerHTML = elm.innerHTML.replace(txtNode, modifiedTextNode);
                         //elm.innerHTML = this.replaceSubstringInRange(fullHtml, this.createLink(linkUrl, newWindowCheckbox.checked), this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
 
