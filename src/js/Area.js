@@ -30,11 +30,9 @@ export default class Area {
         this.dom = document.createElement('div');
         this.dom.classList.add('layout-area');
         this.dom.classList.add('layout-' + this.direction);
-
+        this.LoaderAnimation();
         this.parentArea;
         this.customProps = this.props.more || { customClass: '', padding: 0, bg: false, border: false, borderRadius: 0 };
-
-
         this.contextMenuObject = {
             newArea: {
                 label: "New Area",
@@ -68,10 +66,20 @@ export default class Area {
         this.resizeDimension();
         this.eventSet();
         //Child Elements
-        this.setComponents(props);
+        this.setComponents(props).then(() => {
+            this.LoaderAnimationDom.remove();
+        });
         this.makeResizable();
         this.updateDimensions();
         this.newComponentBtn();
+    }
+
+    LoaderAnimation() {
+        this.LoaderAnimationDom = document.createElement('div');
+        this.LoaderAnimationDom.classList.add('area-loader');
+        this.LoaderAnimationDom.classList.add('area-loader-component');
+        let innerDiv = document.createElement('div');
+        this.LoaderAnimationDom.appendChild(innerDiv);
     }
 
     newComponentBtn() {
@@ -325,7 +333,10 @@ export default class Area {
         document.addEventListener('mouseup', stopResize);
     }
 
-    setComponents(props) {
+    async setComponents(props) {
+        this.dom.appendChild(this.LoaderAnimationDom);
+        //await new Promise(resolve => setTimeout(resolve, 50));
+
         if (props.hasOwnProperty('childs') && props.childs.length > 0) {
             props.childs.forEach(c => {
                 if (c.type == "Area") {

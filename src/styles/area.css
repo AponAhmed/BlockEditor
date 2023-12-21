@@ -36,20 +36,89 @@
 }
 
 
+.area-loader {
+    position: relative;
+    width: 3em;
+    height: 3em;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 0;
+}
+
+.area-loader-component {
+	width: 2em;
+	height: 2em;
+	background-color: rgba(66, 66, 66, 0.1);
+	border-radius: 4px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.area-loader-component > div {
+	position: relative;
+	width: 1em;
+	height: 1em;
+	background-color: #515151;
+	animation: arealoaderanimation 2s infinite linear;
+	border-radius: 4px;
+}
+
+@keyframes arealoaderanimation {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    15% {
+        transform: translate(1em, 0) rotate(90deg);
+    }
+
+    25% {
+        transform: translate(1em, 0) rotate(90deg);
+    }
+
+    40% {
+        transform: translate(1em, 1em) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(1em, 1em) rotate(90deg);
+    }
+
+    65% {
+        transform: translate(0, 1em) rotate(0deg);
+    }
+
+    75% {
+        transform: translate(0, 1em) rotate(0deg);
+    }
+
+    90% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
 /*Property*/
 
 .area-property-window {
-	position: absolute;
-	background: #fff;
-	padding: 20px;
-	border: 1px solid #e8e8eb;
-	box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
-	z-index: 5;
-	border-radius: 6px;
-	padding-top: 41px;
-	left: 0;
-	top: 0;
+    position: absolute;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #e8e8eb;
+    box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
+    z-index: 5;
+    border-radius: 6px;
+    padding-top: 41px;
+    left: 0;
+    top: 0;
 }
+
 .property-window-close {
     position: absolute;
     right: 0;
@@ -65,26 +134,27 @@
 }
 
 .property-window-close {
-	border: 0;
-	background: transparent;
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	font-size: 18px;
-	line-height: 1;
-	cursor: pointer;
-	color: #999;
-	z-index: 1;
+    border: 0;
+    background: transparent;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+    z-index: 1;
 }
+
 .property-window-header {
-	position: absolute;
-	left: 0;
-	top: 0;
-	color: #444;
-	width: 100%;
-	padding: 6px;
-	box-sizing: border-box;
-	cursor: move;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #444;
+    width: 100%;
+    padding: 6px;
+    box-sizing: border-box;
+    cursor: move;
 }
 
 .property-container {

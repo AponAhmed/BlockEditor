@@ -1,0 +1,126 @@
+/*Component*/
+.component-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.component-highlight {
+    background: rgba(249, 249, 65, 0.2);
+}
+
+.component-wrapper .control-section {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.52);
+    display: none;
+    width: 25px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    z-index: 9;
+    transform: translate(0, -50%);
+    backdrop-filter: blur(4px);
+    transition: all .1s;
+}
+
+.control-section:hover {
+    transform: scale(1.2) translate(0, -42%);
+}
+
+.control-section .component-action-btn.component-remove-btn:hover {
+    color: #f71616;
+}
+
+.component-wrapper:hover .control-section {
+    display: flex;
+}
+
+.control-section .component-action-btn {
+    border: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    height: 12px;
+}
+
+.component-action-btn * {
+    pointer-events: none;
+}
+
+.control-section .component-action-btn svg {
+    width: 12px;
+}
+
+.control-section .component-action-btn:last-child {
+    border-bottom: 0;
+}
+
+.action-bold.unbold {
+    background: #ddd;
+}
+
+.layout-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #e8e8eb;
+    border-radius: 6px;
+    z-index: 9;
+    padding-top: 0;
+    box-shadow: 0 3px 15px -3px rgba(13, 20, 33, .13);
+}
+
+.window-header-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    margin-bottom: 4px;
+    cursor: move;
+}
+
+.window-header-head .header-title {
+    color: #444;
+    margin-right: 50px;
+}
+
+.window-header-head>.remove-layout-window {
+    border: 0;
+    background: transparent;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+}
+
+.window-header-head>.remove-layout-window:hover {
+    color: #ff3939;
+}
+
+
+/* color picker */
+.color-picker-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 9;
+}
+
+.color-picker-area button {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-top: 10px;
+}

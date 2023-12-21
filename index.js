@@ -1,3 +1,4 @@
+import "./src/styles/component.css";
 import './src/styles/area.css';
 import './src/styles/context-menu.css';
 import './src/styles/area-actionbar.css';
@@ -18,7 +19,10 @@ class WpBuilder {
         this.buildUi();
         this.renderDom.appendChild(this.ui);
         this.components = [];
-        this.buildExistion();
+
+        this.buildExistion().then(() => {
+            console.log("Loaded All Components");
+        });
         //this.objerver(); //Change Tracker
     }
 
@@ -41,7 +45,7 @@ class WpBuilder {
             }).element);
     }
 
-    buildExistion() {
+    async buildExistion() {
         const data = JSON.parse(this.dataDom.value);
         data.forEach(e => {
             let area = new Area(e);

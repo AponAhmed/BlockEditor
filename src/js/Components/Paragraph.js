@@ -14,7 +14,7 @@ class Paragraph extends Component {
         this.paragraph.innerHTML = this.props.content || "Write Here";
         this.dom.appendChild(this.paragraph);
         this.alignmentControl();
-        this.linkControl();
+        this.txtCommonControll();
         this.paragraph.addEventListener('keyup', () => this.updateContent())
 
     }
