@@ -28,7 +28,7 @@ class Component {
         this.parentArea = parent;
         this.domBuilder = new DOMBuilder();
         this.props = { type: this.type };
-        this.moreProps = this.props.more || {};
+        this.moreProps = this.props.more || {customClass:""};
         this.actions = [];
         this.initDom();
         this.actionDomObj = {};
@@ -74,6 +74,7 @@ class Component {
         this.updateActions();
     }
     getProps() {
+        this.props.more=this.moreProps;
         if (this.hasOwnProperty('getPropsChild')) {
             this.getPropsChild();
         }
@@ -118,6 +119,16 @@ class Component {
         this.propertyWindow.appendChild(head);
         new Draggable(this.propertyWindow, head);
         //Default properties for all Components
+
+        let classProps = this.domBuilder.create('div').class('property-container').element;
+        classProps.appendChild(this.domBuilder.create('label', 'Custom Class').element);
+        classProps.appendChild(this.domBuilder.create('input')
+            .event('keyup', (e) => {
+                this.moreProps.customClass = e.target.value;
+            }).attr({ type: "text" }).value(this.moreProps.customClass).class('property-input').element);
+
+
+        this.propertyWindow.appendChild(classProps);
         //this.moreProps
         //Custom Properties for individual Components
         if (this.hasOwnProperty('individualProperties')) {
@@ -249,7 +260,7 @@ class Component {
 
                 const apicker = new ColorPicker(this.dom, {
                     okCallback: (c) => {
-                        console.log(this.ceretElm, this.selectedText);
+                        //console.log(this.ceretElm, this.selectedText);
                         if (this.selectedText == "" && this.ceretElm != null) {//&& this.ceretElm.tagName.toLowerCase() != 'p'
                             this.ceretElm.style.color = c;
                             console.log(this.ceretElm, this.selectedText);
@@ -298,8 +309,6 @@ class Component {
         });
 
     }
-
-
 
     /**
      * Bold Controller
