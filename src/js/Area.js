@@ -1,3 +1,4 @@
+import ColorPicker from "./ColorPicker.js";
 import Column from "./Components/Column.js";
 import Heading from "./Components/Heading.js";
 import List from "./Components/List.js";
@@ -32,7 +33,10 @@ export default class Area {
         this.dom.classList.add('layout-' + this.direction);
         this.LoaderAnimation();
         this.parentArea;
-        this.customProps = this.props.more || { customClass: '', padding: 0, bg: false, border: false, borderRadius: 0 };
+        this.customProps = this.props.more || { customClass: '' };
+        this.styles = this.customProps.styles || {};
+        this.setExStyles();
+
         this.contextMenuObject = {
             newArea: {
                 label: "New Area",
@@ -98,8 +102,6 @@ export default class Area {
     openComponentBrowser() {
         this.componentBrowser = document.createElement('div');
         this.componentBrowser.classList.add('component-browser');
-
-
 
         let compBrowserHead = document.createElement('div');
         compBrowserHead.classList.add('comp-browser-head');
@@ -232,6 +234,7 @@ export default class Area {
         }
         this.props.childs = childs;
         this.props.more = this.customProps;
+        this.props.more.styles = this.styles;
         return this.props;
     }
 
@@ -367,8 +370,8 @@ export default class Area {
                     this.dom.appendChild(comObj.dom);
                 } else if (c.type == "Editor") {
                     let comObj = new WPEditor(this, c);
-                    this.components.push(comObj);
                     this.dom.appendChild(comObj.dom);
+                    this.components.push(comObj);
                     comObj.initializeWPEditor();
                 }
             });
@@ -391,8 +394,8 @@ export default class Area {
 
         //All Event will be here 
         // Add mouseover and mouseout event listeners to show/hide the action bar
-        this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
-        this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
+        //this.dom.addEventListener('mouseover', (event) => this.showActionBar(event));
+        //this.dom.addEventListener('mouseout', (event) => this.hideActionBar(event));
     }
 
     showActionBar(event) {
@@ -513,28 +516,70 @@ export default class Area {
                 this.customProps.customClass = e.target.value;
             }).attr({ type: "text" }).value(this.customProps.customClass).class('property-input').element);
 
+
         let paddindProps = domBuilder.create('div').class('property-container').element;
         paddindProps.appendChild(domBuilder.create('label', 'Padding').element);
         paddindProps.appendChild(domBuilder.create('input')
             .event('keyup', (e) => {
-                this.customProps.padding = e.target.value;
-                this.dom.style.padding = e.target.value + "px";
-            }).attr({ type: "text" }).value(this.customProps.padding).class('property-input').element);
+                this.styles.padding = e.target.value;
+                this.dom.style.padding = e.target.value;
+            }).attr({ type: "text" }).value(
+                this.styles.hasOwnProperty('padding') ? this.styles.padding : ''
+            ).class('property-input').element);
+
+        let marginProps = domBuilder.create('div').class('property-container').element;
+        marginProps.appendChild(domBuilder.create('label', 'Margin').element);
+        marginProps.appendChild(domBuilder.create('input')
+            .event('keyup', (e) => {
+                this.styles.margin = e.target.value;
+                this.dom.style.margin = e.target.value;
+            }).attr({ type: "text" }).value(
+                this.styles.hasOwnProperty('margin') ? this.styles.margin : ''
+            ).class('property-input').element);
 
         let background = domBuilder.create('div').class('property-container').element;
         background.appendChild(domBuilder.create('label', 'Background').element);
-        background.appendChild(domBuilder.create('input')
-            .event('change', (e) => {
-                this.customProps.bg = e.target.value;
-                this.dom.style.background = e.target.value;
-            }).attr({ type: "color" }).value(this.customProps.bg).class('property-input').element);
+
+        let colorPickerdom = domBuilder.create('div').event('click', () => {
+            new ColorPicker(this.dom, {
+                okCallback: (c) => {
+                    this.styles.background = c;
+                    this.dom.style.background = c;
+                    colorPickerdom.style.background = c;
+                }
+            })
+        }).class('color-picker-selector').element;
+        colorPickerdom.style.background = this.styles.background;
+        background.appendChild(colorPickerdom);
+        // background.appendChild(domBuilder.create('input')
+        //     .event('change', (e) => {
+        //         this.styles.background = e.target.value;
+        //         this.dom.style.background = e.target.value;
+        //     }).attr({ type: "color" }).value(this.styles?.background).class('property-input').element);
 
         this.PropertyWindow.appendChild(classProps);
         this.PropertyWindow.appendChild(background);
         this.PropertyWindow.appendChild(paddindProps);
+        this.PropertyWindow.appendChild(marginProps);
 
         this.dom.appendChild(this.PropertyWindow);
     }
+
+    setExStyles() {
+        if (this.styles) {
+            for (const propertyName in this.styles) {
+                if (this.styles.hasOwnProperty(propertyName)) {
+                    // Check if the property is a valid CSS property before applying
+                    // if (this.dom.style.hasOwnProperty(propertyName)) {
+                    this.dom.style[propertyName] = this.styles[propertyName];
+                    // } else {
+                    //     console.warn(`Invalid CSS property: ${propertyName}`);
+                    // }
+                }
+            }
+        }
+    }
+
 
     removeContextMenu() {
         const contextMenu = document.querySelector('.context-menu');
