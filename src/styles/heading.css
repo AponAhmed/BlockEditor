@@ -1,0 +1,67 @@
+/*Heading*/
+.ui-creator ul.sub-control,
+.ui-creator .heading-changer {
+    padding: 0;
+    margin: 0;
+}
+
+.ui-creator ul.sub-control li {
+    margin: 0;
+}
+
+
+.heading-changer,
+.sub-control {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 0;
+    border-radius: 4px;
+    z-index: 9;
+    padding: 4px 0;
+}
+
+.heading-changer li,
+.sub-control li {
+    text-align: center;
+    list-style: none;
+    padding: 4px 5px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.sub-control li svg {
+    height: 16px;
+}
+
+.heading-changer li:last-child,
+.sub-control li:last-child {
+    border-bottom: 0;
+}
+
+.heading-changer li:hover,
+.sub-control li:hover {
+    background: #dfdfdf;
+}
+
+
+.layout-h-wraper {
+    position: relative;
+    width: 100%;
+}
+
+.layout-h-wraper h1,
+.layout-h-wraper h2,
+.layout-h-wraper h3,
+.layout-h-wraper h4,
+.layout-h-wraper h5,
+.layout-h-wraper h6 {
+    text-align: inherit;
+}

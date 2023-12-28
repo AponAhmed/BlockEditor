@@ -1,8 +1,12 @@
+@import 'column.css';
+@import 'heading.css';
+
 /*Component*/
 .component-wrapper {
     position: relative;
     width: 100%;
 }
+
 
 .component-highlight {
     background: rgba(249, 249, 65, 0.2);
@@ -123,4 +127,11 @@
     border-radius: 4px;
     padding: 2px 8px;
     margin-top: 10px;
+}
+
+.color-picker-selector {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 22px;
 }
