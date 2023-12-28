@@ -36,16 +36,23 @@ export default class WPEditor extends Component {
             mediaButtons: true,
         };
 
-        wp.editor.initialize(this.editorId, {
-            ...editorSettings,
-            value: this.html,
-        });
-        // Optionally, you can access the editor instance if needed
-        const editorElement = document.getElementById(this.editorId);
-        // Listen for events or do any additional setup if needed
-        editorElement.addEventListener('input', () => {
-            // Handle input events
-        });
+
+
+        setTimeout(() => {
+            wp.editor.initialize(this.editorId, {
+                ...editorSettings,
+                value: this.html,
+            });
+            // Optionally, you can access the editor instance if needed
+            const editorElement = document.getElementById(this.editorId);
+            console.log(this.editorId);
+            // Listen for events or do any additional setup if needed
+            editorElement.addEventListener('input', () => {
+                // Handle input events
+                console.log('input');
+            });
+        }, 100);
+
 
         // You can now use the initialized editor as needed
     }
