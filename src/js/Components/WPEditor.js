@@ -45,7 +45,7 @@ export default class WPEditor extends Component {
             });
             // Optionally, you can access the editor instance if needed
             const editorElement = document.getElementById(this.editorId);
-            console.log(this.editorId);
+            console.log(editorElement);
             // Listen for events or do any additional setup if needed
             editorElement.addEventListener('input', () => {
                 // Handle input events
