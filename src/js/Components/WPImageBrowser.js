@@ -32,6 +32,7 @@ export default class WPImageBrowser extends Component {
         mediaUploader.on('select', () => {
             const attachment = mediaUploader.state().get('selection').first().toJSON();
             this.props.src = attachment.url;
+            this.props.id=attachment.id;
             this.width = attachment.width || this.width; // update width if available
             this.height = attachment.height || this.height; // update height if available
             this.handleImageSelection(attachment.url);
