@@ -28,7 +28,7 @@ class Component {
         this.parentArea = parent;
         this.domBuilder = new DOMBuilder();
         this.props = { type: this.type };
-        this.moreProps = this.props.more || {customClass:""};
+        this.moreProps = this.props.more || { customClass: "" };
         this.actions = [];
         this.initDom();
         this.actionDomObj = {};
@@ -52,6 +52,10 @@ class Component {
         this.updateActions();
     }
 
+    updateData() {
+        this.parentArea.updateData();
+    }
+
     getComponentName() {
         if (componentFullName.hasOwnProperty(this.type)) {
             return componentFullName[this.type];
@@ -66,7 +70,19 @@ class Component {
             this.props.align = 'left';
         }
         this.dom.style.textAlign = this.props.align;
+
+        let timeoutId;
+        this.dom.addEventListener('keyup', () => {
+            // Clear any existing timeout
+            clearTimeout(timeoutId);
+            // Set a new timeout for 1000 milliseconds (1 second)
+            timeoutId = setTimeout(() => {
+                console.log('JSON data Updated');
+                this.updateData();
+            }, 1000);
+        });
     }
+
     addAction(action) {
         // Add an action to the list
         this.actions.push(action);
@@ -74,7 +90,7 @@ class Component {
         this.updateActions();
     }
     getProps() {
-        this.props.more=this.moreProps;
+        this.props.more = this.moreProps;
         if (this.hasOwnProperty('getPropsChild')) {
             this.getPropsChild();
         }

@@ -454,11 +454,17 @@ export default class Area {
     }
 
     remove = () => {
-        // Logic to remove the area from the DOM
-        if (this.parentArea) {
-            this.parentArea.components = this.parentArea.components.filter(component => component !== this);
+        try {
+            // Logic to remove the area from the DOM
+            if (this.parentArea) {
+                this.parentArea.components = this.parentArea.components.filter(component => component !== this);
+            }
+            this.dom.remove();
+            this.updateData();
+        } catch (error) {
+            console.log(error.message);
         }
-        this.dom.remove();
+
     }
 
     resizeTriger = () => {
@@ -471,28 +477,45 @@ export default class Area {
     }
 
     insertComponent(componentClass) {
-        let comObj = new componentClass(this);
-        this.components.push(comObj);
-        if (comObj.type == "Editor") {
-            this.dom.appendChild(comObj.dom);
-            comObj.initializeWPEditor();
-        } else {
-            this.dom.appendChild(comObj.dom);
-        }
+        try {
+            let comObj = new componentClass(this);
+            this.components.push(comObj);
+            if (comObj.type == "Editor") {
+                this.dom.appendChild(comObj.dom);
+                comObj.initializeWPEditor();
+            } else {
+                this.dom.appendChild(comObj.dom);
+            }
 
-        if (this.dom.classList.contains('no-components')) {
-            this.dom.classList.remove('no-components');
+            if (this.dom.classList.contains('no-components')) {
+                this.dom.classList.remove('no-components');
+            }
+        } finally {
+            this.updateData();
+        }
+    }
+
+    updateData() {
+        if (this.parentArea) {
+            this.parentArea.updateData();
         }
     }
 
     createNewArea = (object = {}) => {
-        const newArea = new Area(object);
-        newArea.setParent(this);
-        this.components.push(newArea);
-        this.dom.appendChild(newArea.dom);
-        if (this.dom.classList.contains('no-components')) {
-            this.dom.classList.remove('no-components');
+
+        try {
+            const newArea = new Area(object);
+            newArea.setParent(this);
+            this.components.push(newArea);
+            this.dom.appendChild(newArea.dom);
+            if (this.dom.classList.contains('no-components')) {
+                this.dom.classList.remove('no-components');
+            }
+            this.updateData();
+        } catch (error) {
+            console.log(error);
         }
+
     }
 
     showPropertyWindow = () => {
