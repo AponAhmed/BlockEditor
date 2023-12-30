@@ -9,7 +9,7 @@ import "./src/styles/builder.css";
 import Area from './src/js/Area.js';
 import DOMBuilder from './src/js/DomBuilder.js';
 
-class WpBuilder {
+class layoutBuilder {
     constructor(renderDom, dataDom) {
         this.renderDom = renderDom;
         this.dataDom = dataDom;
@@ -41,7 +41,7 @@ class WpBuilder {
             .attr({ type: "button" })
             .class('data-generate-btn')
             .event('click', () => {
-                this.checkData();
+                this.updateData();
             }).element);
     }
 
@@ -62,7 +62,7 @@ class WpBuilder {
         this.components.push(area);
     }
 
-    checkData() {
+    updateData() {
         console.log('Updating data');
         console.log('--------------------------------');
         let data = [];
@@ -91,16 +91,17 @@ class WpBuilder {
 
     objerver() {
         // Options for the observer (which mutations to observe)
-        const config = { attributes: false, childList: true, subtree: true };
+        const config = { attributes: true, childList: true, subtree: true };
 
         // Callback function to execute when mutations are observed
         const callback = (mutationsList, observer) => {
             // Handle changes here
             for (const mutation of mutationsList) {
+                //console.log(mutationsList);
                 if (mutation.type === 'attributes') {
-                    this.checkData();
+                    this.updateData();
                 } else if (mutation.type === 'childList') {
-                    this.checkData();
+                    this.updateData();
                 }
             }
         };
@@ -114,5 +115,5 @@ class WpBuilder {
 
 }
 
-new WpBuilder(document.getElementById("customAreaBuilder"), document.getElementById("layoutData"));
+new layoutBuilder(document.getElementById("customAreaBuilder"), document.getElementById("layoutData"));
 
