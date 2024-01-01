@@ -8,6 +8,7 @@ import WPImageBrowser from "./Components/WPImageBrowser.js";
 import ComponentLists from "./ComponentsRegistry.js";
 import DOMBuilder from "./DomBuilder.js";
 import Draggable from "./Draggable.js";
+import { Tooltip } from "./Tooltip.js";
 
 
 
@@ -92,6 +93,7 @@ export default class Area {
         let btn = document.createElement('span');
         btn.classList.add('btn-new-component');
         btn.innerHTML = `<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 112v288M400 256H112"></path></svg>`;
+        new Tooltip({ item: btn, position: 'bottom', text: "Insert element" });
         btnArea.appendChild(btn);
         btn.addEventListener('click', () => {
             this.openComponentBrowser();

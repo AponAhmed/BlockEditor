@@ -3,6 +3,7 @@ import DOMBuilder from "./DomBuilder";
 import Draggable from "./Draggable";
 import colorPicker from 'tui-color-picker'; /* ES6 */
 import 'tui-color-picker/dist/tui-color-picker.css';
+import { Tooltip } from "./Tooltip";
 
 const IconsSet = {
     remove: '<svg height="16" width="14" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"/></svg>',
@@ -107,6 +108,7 @@ class Component {
         // Add each action to the component
         this.actions.forEach(action => {
             const actionButton = this.domBuilder.create('div', action.label, true).class('component-action-btn').class(`action-${action.indx}`);
+            new Tooltip({ item: actionButton.element, position: 'left' });
             if (action.hasOwnProperty('indx')) {
                 this.actionDomObj[action.indx] = actionButton.getElement();
             }
@@ -115,6 +117,7 @@ class Component {
             }
             actionButton.event('click', action.handler);
             this.actionDom.appendChild(actionButton.getElement());
+
         });
         //More control
         const moreControll = this.domBuilder.create('div', this.geticon('more'), true)
@@ -301,26 +304,6 @@ class Component {
                     }
                 });
 
-
-                // if (this.ceretElm && this.ceretElm.tagName.toLowerCase() === 'span') {
-                //     let parent = this.ceretElm.parentNode;
-                //     const linkText = this.ceretElm.textContent;
-                //     const textNode = document.createTextNode(linkText);
-                //     // Replace the anchor tag with its text content
-                //     parent.replaceChild(textNode, this.ceretElm);
-                //     return;
-                // } else if (this.selectedText) {
-                //     // Create the link and replace the selected text
-                //     // let elm = this.selectedObject.anchorNode.parentElement;
-                //     // let txtNode = this.selectedObject.anchorNode.nodeValue;
-                //     // let modifiedTextNode = this.replaceSubstringInRange(txtNode, `<strong>${this.selectedText}</strong>`, this.selectedObject.anchorOffset, this.selectedObject.focusOffset);
-
-                //     // elm.innerHTML = elm.innerHTML.replace(txtNode, modifiedTextNode);
-                //     this.selectedText = ""
-                //     this.selectedObject = {};
-                // } else {
-                //     console.log("Please Select a Text");
-                // }
             }
         });
 
