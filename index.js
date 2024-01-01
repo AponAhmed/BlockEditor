@@ -6,8 +6,10 @@ import "./src/styles/input-styles.css";
 import "./src/styles/resize-pointer.css";
 import "./src/styles/builder.css";
 
+
 import Area from './src/js/Area.js';
 import DOMBuilder from './src/js/DomBuilder.js';
+import { Tooltip } from "./src/js/Tooltip.js";
 
 class layoutBuilder {
     constructor(renderDom, dataDom) {
@@ -30,12 +32,15 @@ class layoutBuilder {
         this.ui = this.builder.create('div').class('ui-creator').element;
         this.areaDom = this.builder.create('div').class('custom-areas').element;
         this.ui.appendChild(this.areaDom);
-        this.ui.appendChild(this.builder.create('button', `<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 112v288M400 256H112"/></svg>`, true)
+        let newBtn = this.builder.create('button', `<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 112v288M400 256H112"/></svg>`, true)
             .attr({ type: "button" })
             .class('new-area-btn')
             .event('click', () => {
                 this.createNewArea();
-            }).element);
+            }).element;
+        new Tooltip({ item: newBtn, position: 'bottom', text: "Create New Area" });
+
+        this.ui.appendChild(newBtn);
 
         this.ui.appendChild(this.builder.create('button', "Check Data")
             .attr({ type: "button" })
