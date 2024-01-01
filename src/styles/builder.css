@@ -1,3 +1,8 @@
+#layoutData,
+.data-generate-btn {
+    display: none;
+}
+
 .ui-creator {
     background: #fff;
     padding: 10px;
@@ -35,4 +40,3 @@
 .new-area-btn svg {
     width: 24px;
 }
-

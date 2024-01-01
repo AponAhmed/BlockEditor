@@ -9,9 +9,13 @@
     flex: auto;
 }
 
-.layout-area:empty {
-    border: 1px solid #ccc;
-    background: #f00;
+.layout-area.no-components {
+    border: 1px solid #e7e7e7;
+    background: rgb(245, 245, 245);
+}
+
+.layout-area.layout-row>div:not(:first-child) {
+    margin-left: 10px;
 }
 
 .layout-area.area-selected {
@@ -47,23 +51,23 @@
 }
 
 .area-loader-component {
-	width: 2em;
-	height: 2em;
-	background-color: rgba(66, 66, 66, 0.1);
-	border-radius: 4px;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
+    width: 2em;
+    height: 2em;
+    background-color: rgba(66, 66, 66, 0.1);
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.area-loader-component > div {
-	position: relative;
-	width: 1em;
-	height: 1em;
-	background-color: #515151;
-	animation: arealoaderanimation 2s infinite linear;
-	border-radius: 4px;
+.area-loader-component>div {
+    position: relative;
+    width: 1em;
+    height: 1em;
+    background-color: #515151;
+    animation: arealoaderanimation 2s infinite linear;
+    border-radius: 4px;
 }
 
 @keyframes arealoaderanimation {
