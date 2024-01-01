@@ -199,5 +199,12 @@ export default class DOMBuilder {
         builder.element = parsedDocument.body.firstChild.cloneNode(true); // Cloning with event listeners
         return builder;
     }
+
+    html(html) {
+        if (this.element instanceof HTMLElement) {
+            this.element.innerHTML = html;
+        }
+        return this;
+    }
 }
 
