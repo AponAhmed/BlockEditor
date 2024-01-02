@@ -21,7 +21,7 @@ const ComponentLists = [
     { label: "Heading", icon: ComponentIcons.heading, cls: Heading },
     { label: "Paragraph", icon: ComponentIcons.txt, cls: Paragraph },
     { label: "Wp-Image", cls: WPImageBrowser, icon: ComponentIcons.image },
-    { label: "Image", cls: ImageBrowser, icon: ComponentIcons.image },
+    // { label: "Image", cls: ImageBrowser, icon: ComponentIcons.image },
     { label: "Column", icon: ComponentIcons.column, cls: Column },
     { label: "List", icon: ComponentIcons.list, cls: List },
     { label: "Editor", cls: WPEditor, icon: ComponentIcons.editor },
