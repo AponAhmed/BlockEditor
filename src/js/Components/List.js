@@ -75,6 +75,7 @@ class List extends Component {
         this.initList();
         this.renderItems();
         this.RemovelistTypeChanger();
+        this.updateData();
     }
 
     renderItems() {

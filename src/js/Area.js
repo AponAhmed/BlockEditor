@@ -245,7 +245,6 @@ export default class Area {
         this.dom.style.width = this.width + "%";
         this.props.width = this.width;
         this.resizeDimensions.innerHTML = this.width + "%";
-
     }
 
     resizeDimension() {
@@ -453,6 +452,7 @@ export default class Area {
         this.dom.classList.toggle(`layout-column`);
         this.contextMenuObject.derectionChanger.label = this.direction === 'row' ? "Column Direction" : "Row Direction";
         this.contextMenuObject.derectionChanger.icon = this.direction == "row" ? ContextIcon.directionCol : ContextIcon.directionRow;
+        this.updateData();
     }
 
     remove = () => {
@@ -475,6 +475,7 @@ export default class Area {
             this.contextMenuObject.resize.label = "Close Resize";
         } else {
             this.contextMenuObject.resize.label = "Resize Area";
+            this.updateData();
         }
     }
 
@@ -539,6 +540,7 @@ export default class Area {
         classProps.appendChild(domBuilder.create('input')
             .event('keyup', (e) => {
                 this.customProps.customClass = e.target.value;
+                this.updateData();
             }).attr({ type: "text" }).value(this.customProps.customClass).class('property-input').element);
 
 
@@ -548,6 +550,7 @@ export default class Area {
             .event('keyup', (e) => {
                 this.styles.padding = e.target.value;
                 this.dom.style.padding = e.target.value;
+                this.updateData();
             }).attr({ type: "text" }).value(
                 this.styles.hasOwnProperty('padding') ? this.styles.padding : ''
             ).class('property-input').element);
@@ -558,6 +561,7 @@ export default class Area {
             .event('keyup', (e) => {
                 this.styles.margin = e.target.value;
                 this.dom.style.margin = e.target.value;
+                this.updateData();
             }).attr({ type: "text" }).value(
                 this.styles.hasOwnProperty('margin') ? this.styles.margin : ''
             ).class('property-input').element);
@@ -571,6 +575,7 @@ export default class Area {
                     this.styles.background = c;
                     this.dom.style.background = c;
                     colorPickerdom.style.background = c;
+                    this.updateData();
                 }
             })
         }).class('color-picker-selector').element;

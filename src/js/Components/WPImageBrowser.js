@@ -13,7 +13,7 @@ export default class WPImageBrowser extends Component {
         } else {
             this.handleImageSelection(this.props.src);
         }
-      
+
         this.makeResizable();
     }
 
@@ -32,7 +32,7 @@ export default class WPImageBrowser extends Component {
         mediaUploader.on('select', () => {
             const attachment = mediaUploader.state().get('selection').first().toJSON();
             this.props.src = attachment.url;
-            this.props.id=attachment.id;
+            this.props.id = attachment.id;
             this.width = attachment.width || this.width; // update width if available
             this.height = attachment.height || this.height; // update height if available
             this.handleImageSelection(attachment.url);
@@ -84,6 +84,12 @@ export default class WPImageBrowser extends Component {
                 }
             }
         });
+    }
+
+    update() {
+        if (this.parentArea) {
+            this.parentArea.updateData();
+        }
     }
 
     initResize(e, index) {
@@ -166,5 +172,7 @@ export default class WPImageBrowser extends Component {
     handleImageSelection(imageUrl) {
         this.img.src = imageUrl;
         this.dom.appendChild(this.img);
+        this.update();
+
     }
 }

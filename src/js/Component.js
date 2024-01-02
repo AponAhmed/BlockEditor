@@ -54,6 +54,10 @@ class Component {
     }
 
     updateData() {
+
+        if (this.hasOwnProperty('updateContent')) {
+            this.updateContent();
+        }
         this.parentArea.updateData();
     }
 
@@ -102,6 +106,7 @@ class Component {
             this.parentArea.components = this.parentArea.components.filter(component => component !== this);
         }
         this.dom.remove();
+        this.updateData();
     }
     updateActions() {
         this.actionDom.innerHTML = ''; // Clear existing content
@@ -162,6 +167,7 @@ class Component {
     removePropertyWindow = () => {
         if (this.hasOwnProperty('propertyWindow'))
             this.propertyWindow.remove();
+        this.updateData();
     }
 
     geticon(name) {
@@ -206,10 +212,10 @@ class Component {
         btn.innerHTML = this.geticon(align);
         this.dom.style.textAlign = align;
         this.props.align = align;
-        this.updateContent();
         const subControl = this.dom.querySelector('.sub-control');
         if (subControl) {
             subControl.remove();
+            this.updateData();
         }
     }
 
@@ -282,7 +288,7 @@ class Component {
                         //console.log(this.ceretElm, this.selectedText);
                         if (this.selectedText == "" && this.ceretElm != null) {//&& this.ceretElm.tagName.toLowerCase() != 'p'
                             this.ceretElm.style.color = c;
-                            console.log(this.ceretElm, this.selectedText);
+                            //console.log(this.ceretElm, this.selectedText);
                         } else {
                             if (this.selectedText != "") {
                                 // Create the link and replace the selected text
@@ -301,6 +307,7 @@ class Component {
                         }
                         this.selectedText = ""
                         this.selectedObject = {};
+                        this.updateData();
                     }
                 });
 
@@ -335,9 +342,11 @@ class Component {
                     elm.innerHTML = elm.innerHTML.replace(txtNode, modifiedTextNode);
                     this.selectedText = ""
                     this.selectedObject = {};
+
                 } else {
                     console.log("Please Select a Text");
                 }
+                this.updateData();
             }
         });
     }
@@ -358,6 +367,8 @@ class Component {
                     const textNode = document.createTextNode(linkText);
                     // Replace the anchor tag with its text content
                     parent.replaceChild(textNode, this.ceretElm);
+
+                    this.updateData();
                     return;
                 }
 
@@ -372,6 +383,7 @@ class Component {
                         this.selectedText = "";
                         this.selectedObject = {};
                         this.linkWindow.remove();
+
                     });
 
                     okButton.addEventListener('click', (e) => {
@@ -390,6 +402,8 @@ class Component {
                         this.linkWindow.remove();
                         this.selectedText = ""
                         this.selectedObject = {};
+
+                        this.updateData();
                     });
                 } else {
                     console.log("Please Select a Text");
