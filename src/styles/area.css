@@ -14,8 +14,8 @@
     background: rgb(245, 245, 245);
 }
 
-.layout-area.layout-row>div:not(:first-child) {
-    margin-left: 10px;
+.layout-area.layout-row > div.layout-area:not(:first-child) {
+	margin-left: 10px;
 }
 
 .layout-area.area-selected {

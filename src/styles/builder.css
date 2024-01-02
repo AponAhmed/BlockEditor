@@ -23,13 +23,18 @@
     margin: 0;
 }
 
+.ui-primary-tool {
+    display: flex;
+    justify-content: center;
+}
+
 .new-area-btn {
     display: flex;
     background: #fff;
     border: 0;
     border-radius: 6px;
     padding: 5px;
-    margin: 5px auto;
+    margin: 5px;
     cursor: pointer;
 }
 
@@ -39,4 +44,62 @@
 
 .new-area-btn svg {
     width: 24px;
+    height: 24px;
+}
+
+.template-browser {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	background: rgba(221, 221, 221, 0.5);
+	z-index: 999;
+	transform: translate(-50%, -50%);
+	border-radius: 4px;
+	border: 1px solid #ddd;
+	backdrop-filter: blur(10px);
+	padding: 35px 10px 10px 10px;
+}
+
+.template-item:hover {
+    box-shadow: 0px 0px 6px rgba(81, 166, 217, 0.39);
+}
+
+.template-browser-header {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.template-browser-header strong {
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
+    padding-left: 6px;
+}
+
+.template-browser-header span {
+    padding: 7px;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.template-wraper {
+    display: grid;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.template-item {
+    line-height: 0;
+}
+
+.template-item svg {
+    width: 64px;
+    height: 64px;
 }
