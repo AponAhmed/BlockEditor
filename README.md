@@ -4,7 +4,7 @@ The Block Editor is a robust web development tool that simplifies the creation o
 
 ## Installation
 ```bash
-   npm i @aponahmed/blockeditor
+   npm i @aponahmed/blockeditor --save-dev
 ```
 ## JSON to HTML Building Reference with PHP and JavaScript
    - PHP [PHP-Client-for-Block-Editor](https://github.com/AponAhmed/PHP-Client-for-Block-Editor)
