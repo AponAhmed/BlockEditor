@@ -1,5 +1,5 @@
 import DOMBuilder from "./DomBuilder";
-import "../styles/tooltip.scss";
+import "../styles/tooltip.css";
 
 export class Tooltip {
     constructor({ ...args }) {
