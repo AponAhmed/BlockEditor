@@ -39,12 +39,15 @@ const ComponentLists = [
   },
   { type: "Column", label: "Column", icon: ComponentIcons.column, cls: Column },
   { type: "List", label: "List", icon: ComponentIcons.list, cls: List },
-  {
+];
+
+if (typeof wp !== "undefined") {
+  ComponentLists.push({
     type: "Editor",
     label: "Editor",
     cls: WPEditor,
     icon: ComponentIcons.editor,
-  },
-];
+  });
+}
 
 export default ComponentLists;
