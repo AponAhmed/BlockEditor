@@ -128,14 +128,14 @@ class layoutBuilder {
     }
 
     updateData() {
-        console.log('Updating data');
-        console.log('--------------------------------');
         let data = [];
         this.components.forEach(e => {
             data.push(e.getProps());
         });
-        console.log(data);
         this.dataDom.value = JSON.stringify(data);
+
+        let currentTime = new Date().toLocaleTimeString();
+        console.log('Updated data at - ' + currentTime);
         //const myObject = JSON.parse(jsonString);
     }
 
