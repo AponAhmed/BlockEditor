@@ -51,6 +51,7 @@
   cursor: pointer;
   height: 20px;
   line-height: 1;
+  box-sizing: border-box;
 }
 
 .component-action-btn * {
@@ -133,4 +134,25 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   width: 22px;
+}
+
+
+/* Utility Classes for Area, Direction, and Alignment */
+.rounded-sm{
+	border-radius: 4px;
+}
+
+.rounded-md{
+	border-radius: 1em;
+}
+.rounded-50{
+	border-radius: 50px;
+}
+.rounded-full{
+	border-radius: 100%;
+}
+
+.align-center {
+	align-items: center;
+	justify-content: center;
 }
