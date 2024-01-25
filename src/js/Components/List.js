@@ -7,12 +7,10 @@ const listTypeIcons = {
 
 class List extends Component {
     constructor(parentComponent, props = { listType: "ul" }) {
-        super(parentComponent, 'List');
-        this.props = { ...this.props, ...props };
+        super(parentComponent, 'List', props);
+
         this.dom.classList.add('layout-list-wrapper');
-
         this.initList();
-
         // Initialize the list with provided items or an empty array
         this.props.items = this.props.items || ["List Item"];
         this.renderItems();

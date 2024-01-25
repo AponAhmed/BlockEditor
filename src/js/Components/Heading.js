@@ -2,8 +2,7 @@ import Component from "../Component.js";
 
 class Heading extends Component {
     constructor(parentComponent, props = {}) {
-        super(parentComponent, 'H');
-        this.props = { ...this.props, ...props };
+        super(parentComponent, 'H',props);
         this.dom.classList.add('layout-h-wraper');
         // Create a <p> element
         this.currentTag = props.tag || "h1";

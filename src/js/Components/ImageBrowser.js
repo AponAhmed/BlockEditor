@@ -2,8 +2,7 @@ import Component from "../Component.js";
 
 export default class ImageBrowser extends Component {
   constructor(parentComponent = {}, props = {}) {
-    super(parentComponent, "Image");
-    this.props = { ...this.props, ...props };
+    super(parentComponent, "Image", props);
     this.width = 200; // default width
     this.height = 150; // default height
     this.dom.classList.add("layout-image");

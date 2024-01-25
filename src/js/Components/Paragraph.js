@@ -3,8 +3,8 @@ import Component from "../Component.js";
 
 class Paragraph extends Component {
     constructor(parentComponent, props = {}) {
-        super(parentComponent, 'P');
-        this.props = { ...this.props, ...props };
+        super(parentComponent, 'P',props);
+        
         this.dom.classList.add('layout-p-wraper');
         // Create a <p> element
         this.paragraph = document.createElement('p');

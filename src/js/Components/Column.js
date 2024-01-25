@@ -12,8 +12,7 @@ const ColumnIcon = {
 
 class Column extends Component {
     constructor(parentComponent, props = {}) {
-        super(parentComponent, 'Column');
-        this.props = { ...this.props, ...props };
+        super(parentComponent, 'Column', props);
         this.components = [];
         this.dom.classList.add('layout-column-wraper');
         this.columnDom = this.domBuilder.create('div').class('column-wrapper').getElement();

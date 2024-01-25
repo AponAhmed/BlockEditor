@@ -2,9 +2,7 @@ import Component from "../Component.js";
 
 export default class WPEditor extends Component {
     constructor(parentComponent = {}, props = {}) {
-        super(parentComponent, 'Editor');
-
-        this.props = { ...this.props, ...props };
+        super(parentComponent, 'Editor', props);
 
         this.name = this.generateUniqueId("editor");
         this.html = this.props.content || "<p>Default Text</p>";
