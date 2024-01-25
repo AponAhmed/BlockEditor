@@ -24,12 +24,14 @@ const componentFullName = {
 }
 
 class Component {
-    constructor(parent = {}, type) {
+    constructor(parent = {}, type, props) {
         this.type = type;
         this.parentArea = parent;
         this.domBuilder = new DOMBuilder();
         this.props = { type: this.type };
+        this.props = { ...this.props, ...props };
         this.moreProps = this.props.more || { customClass: "" };
+
         this.actions = [];
         this.initDom();
         this.actionDomObj = {};
@@ -74,6 +76,22 @@ class Component {
         if (!this.props.hasOwnProperty('align')) {
             this.props.align = 'left';
         }
+
+
+        if (this.moreProps.hasOwnProperty('customClass')) {
+            // Assuming this.moreProps.customclass contains multiple classes separated by spaces
+            let customClasses = this.moreProps.customClass.split(' ');
+            // Filter out empty classes
+            customClasses = customClasses.filter(function (className) {
+                return className.trim() !== ''; // Remove leading and trailing spaces and check if not empty
+            });
+            // Add each non-empty class to the element
+            customClasses.forEach((className) => {
+                this.dom.classList.add(className);
+            });
+        }
+
+
         this.dom.style.textAlign = this.props.align;
 
         let timeoutId;
@@ -82,7 +100,6 @@ class Component {
             clearTimeout(timeoutId);
             // Set a new timeout for 1000 milliseconds (1 second)
             timeoutId = setTimeout(() => {
-                console.log('JSON data Updated');
                 this.updateData();
             }, 1000);
         });

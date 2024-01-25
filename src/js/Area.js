@@ -627,6 +627,21 @@ export default class Area {
   };
 
   setExStyles() {
+    //Class
+    console.log(this.customProps);
+    if (this.customProps.hasOwnProperty('customClass')) {
+      // Assuming this.moreProps.customclass contains multiple classes separated by spaces
+      let customClasses = this.customProps.customClass.split(' ');
+      // Filter out empty classes
+      customClasses = customClasses.filter(function (className) {
+        return className.trim() !== ''; // Remove leading and trailing spaces and check if not empty
+      });
+      // Add each non-empty class to the element
+      customClasses.forEach((className) => {
+        this.dom.classList.add(className);
+      });
+    }
+
     if (this.styles) {
       for (const propertyName in this.styles) {
         if (this.styles.hasOwnProperty(propertyName)) {
