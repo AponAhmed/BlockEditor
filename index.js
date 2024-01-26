@@ -83,6 +83,9 @@ class layoutBuilder {
     }
 
     async buildExistion(json = false) {
+        if (this.dataDom.value == "") {
+            this.dataDom.value = "[]";
+        }
         let data = JSON.parse(this.dataDom.value);
         if (json) {
             data = JSON.parse(json);
