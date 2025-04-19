@@ -8,6 +8,14 @@ The Block Editor is a robust web development tool that simplifies the creation o
 ```
 
 ## Uses
+To start using the LayoutBuilder, you need to instantiate it by passing in references to the HTML elements where the layout will be rendered and where the layout data is stored.
+```javascript 
+let LayoutBuilder = new layoutBuilder(containerElement, dataElement);
+
+```
+
+### Example
+
 ```javascript
 import layoutBuilder from '@aponahmed/blockeditor';
 
@@ -23,6 +31,23 @@ LayoutBuilder.addTemplate({
 })
 
 LayoutBuilder.init();
+```
+### Adding Templates
+Templates define the structure and layout of your page components. Using addTemplate, you can add predefined layouts with custom data
+
+```javascript
+LayoutBuilder.addTemplate({
+    icon: <svg-Icon>,  // A custom icon for the template (optional)
+    json: <JSON-Layout-Data>  // The layout structure in JSON format
+});
+```
+
+#### Example 
+```javascript
+LayoutBuilder.addTemplate({
+    icon: `<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">...</svg>`,
+    json: `[{"type":"Area","width":100,"direction":"row","childs":[{"width":50,"direction":"column","type":"Area","childs":[{"type":"H","align":"left","content":"Write Here your Heading"},{"type":"P","align":"left","content":"In publishing and graphic design..."}]}]}]`
+});
 ```
 
 ## JSON to HTML Building Reference with PHP and JavaScript
