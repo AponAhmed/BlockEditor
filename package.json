@@ -1,15 +1,37 @@
 {
-  "name": "editor",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@aponahmed/blockeditor",
+  "version": "0.1.0",
+  "description": "HTML dynamic Layout (JSON) Builder by JavaScript",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
+  "keywords": [
+    "block editor",
+    "HTML editor",
+    "component editor",
+    "web development",
+    "JavaScript editor",
+    "DOM manipulation",
+    "frontend development",
+    "web components",
+    "JSON Builder"
+  ],
+  "author": "Md. Muhiminul Haque Apon",
+  "license": "ISC",
   "devDependencies": {
     "vite": "^6.3.1",
     "tui-color-picker": "^2.2.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AponAhmed/BlockEditor.git"
+  },
+  "homepage": "https://github.com/AponAhmed/BlockEditor.git#readme",
+  "bugs": {
+    "url": "https://github.com/AponAhmed/BlockEditor/issues"
   }
 }
