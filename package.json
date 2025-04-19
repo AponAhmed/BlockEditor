@@ -22,6 +22,9 @@
   ],
   "author": "Md. Muhiminul Haque Apon",
   "license": "ISC",
+  "dependencies": {
+    "tui-color-picker": "^2.2.8"
+  },
   "devDependencies": {
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.5",
