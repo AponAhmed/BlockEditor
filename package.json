@@ -23,8 +23,10 @@
   "author": "Md. Muhiminul Haque Apon",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^6.3.1",
-    "tui-color-picker": "^2.2.8"
+    "postcss": "^8.5.3",
+    "postcss-preset-env": "^10.1.5",
+    "tui-color-picker": "^2.2.8",
+    "vite": "^6.3.1"
   },
   "repository": {
     "type": "git",
