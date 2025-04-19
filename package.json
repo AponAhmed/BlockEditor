@@ -1,28 +1,15 @@
 {
-  "name": "blockeditor",
-  "version": "1.0.0",
-  "description": "HTML dynamic Layout (JSON) Builder by JavaScript",
-  "main": "index.js",
+  "name": "editor",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "webpack --mode production",
-    "watch": "webpack --watch --mode development"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.23.5",
-    "@babel/preset-env": "^7.23.5",
-    "babel-loader": "^9.1.3",
-    "css-loader": "^6.8.1",
-    "mini-css-extract-plugin": "^2.7.6",
-    "sass": "^1.69.5",
-    "sass-loader": "^13.3.2",
-    "style-loader": "^3.3.3",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
-  },
-  "dependencies": {
+    "vite": "^6.3.1",
     "tui-color-picker": "^2.2.8"
   }
 }

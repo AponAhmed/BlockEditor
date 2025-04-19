@@ -1,15 +1,15 @@
-import "./src/styles/component.css";
-import './src/styles/area.css';
-import './src/styles/context-menu.css';
-import './src/styles/area-actionbar.css';
-import "./src/styles/input-styles.css";
-import "./src/styles/resize-pointer.css";
-import "./src/styles/builder.css";
+import "./styles/component.css";
+import './styles/area.css';
+import './styles/context-menu.css';
+import './styles/area-actionbar.css';
+import "./styles/input-styles.css";
+import "./styles/resize-pointer.css";
+import "./styles/builder.css";
 
 
-import Area from './src/js/Area.js';
-import DOMBuilder from './src/js/DomBuilder.js';
-import { Tooltip } from "./src/js/Tooltip.js";
+import Area from './js/Area.js';
+import DOMBuilder from './js/DomBuilder.js';
+import { Tooltip } from "./js/Tooltip.js";
 
 const icons = {
     add: `<svg viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 112v288M400 256H112"/></svg>`,
@@ -49,7 +49,6 @@ export default class layoutBuilder {
         this.builder = new DOMBuilder();
         this.areaDom;
         this.ui = null;
-        this.renderDom.appendChild(this.ui);
         this.components = [];
         this.templates = templates;
 
@@ -94,6 +93,7 @@ export default class layoutBuilder {
             }).element);
         //Build Existing Areas
         this.buildExistion().then(() => {
+            this.renderDom.appendChild(this.ui);
             console.log("Loaded All Components");
         });
     }
@@ -198,3 +198,5 @@ export default class layoutBuilder {
     }
 
 }
+
+console.log('Layout Builder Loaded');
