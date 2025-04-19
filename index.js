@@ -31,24 +31,36 @@ const templates = [
     }
 ];
 
-class layoutBuilder {
+/**
+ * LayoutBuilder Class
+ * 
+ * A dynamic layout(JSON) builder for HTML using pure JavaScript.
+ * 
+ * Usage:
+ * 1. Import the LayoutBuilder in your project.
+ * 2. Inject templates and custom components like `Area` or `Image` using `addTemplate` and `injectComponent`.
+ * 3. Call the `init` method to start the builder.
+ */
+
+export default class layoutBuilder {
     constructor(renderDom, dataDom) {
         this.renderDom = renderDom;
         this.dataDom = dataDom;
         this.builder = new DOMBuilder();
         this.areaDom;
         this.ui = null;
-        this.buildUi();
         this.renderDom.appendChild(this.ui);
         this.components = [];
+        this.templates = templates;
 
-        this.buildExistion().then(() => {
-            console.log("Loaded All Components");
-        });
         //this.objerver(); //Change Tracker
     }
 
-    buildUi() {
+    addTemplate(template) {
+        this.templates.push(template);
+    }
+
+    init() {
         this.ui = this.builder.create('div').class('ui-creator').element;
         this.areaDom = this.builder.create('div').class('custom-areas').element;
         this.ui.appendChild(this.areaDom);
@@ -80,6 +92,10 @@ class layoutBuilder {
             .event('click', () => {
                 this.updateData();
             }).element);
+        //Build Existing Areas
+        this.buildExistion().then(() => {
+            console.log("Loaded All Components");
+        });
     }
 
     async buildExistion(json = false) {
@@ -115,7 +131,7 @@ class layoutBuilder {
         this.templatebrowserdom.appendChild(templateBrowserHeader);
 
         let tamplatesWraper = this.builder.create('div').class('template-wraper').element;
-        templates.forEach(template => {
+        this.templates.forEach(template => {
             let templateElement = this.builder.create('div', template.icon, true).class('template-item');
             templateElement.event('click', () => {
                 this.buildExistion(template.json).then(() => {
@@ -182,6 +198,3 @@ class layoutBuilder {
     }
 
 }
-
-new layoutBuilder(document.getElementById("customAreaBuilder"), document.getElementById("layoutData"));
-
