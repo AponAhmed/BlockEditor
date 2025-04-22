@@ -1,8 +1,9 @@
 name: Node.js Package
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main  # Replace with the branch you want to trigger the workflow on (e.g., 'main', 'master', etc.)
 
 jobs:
   build:
@@ -30,3 +31,4 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          
