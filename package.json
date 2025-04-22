@@ -1,6 +1,6 @@
 {
   "name": "@aponahmed/blockeditor",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "HTML dynamic Layout (JSON) Builder by JavaScript",
   "main": "src/index.js",
   "type": "module",
