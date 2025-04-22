@@ -3,7 +3,7 @@
 The Block Editor is a robust web development tool that simplifies the creation of dynamic and customizable HTML layouts. Developed with HTML, CSS, and JavaScript, it empowers web developers to efficiently construct content-rich pages.
 
 ## Demo
-A quick preview of Block Editor [Vercel](https://block-editor-two-xi.vercel.app/)
+A quick preview of Block Editor on [Vercel](https://block-editor-two-xi.vercel.app/)
 
 
 ## Installation
@@ -15,6 +15,8 @@ A quick preview of Block Editor [Vercel](https://block-editor-two-xi.vercel.app/
 To start using the LayoutBuilder, you need to instantiate it by passing in references to the HTML elements where the layout will be rendered and where the layout data is stored.
 ```javascript 
 let LayoutBuilder = new layoutBuilder(containerElement, dataElement);
+
+//Here *dataElement* contain JSON data what build dynamically with Layout creation
 
 ```
 
